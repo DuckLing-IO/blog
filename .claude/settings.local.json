@@ -9,7 +9,13 @@
       "Bash(python md2html.py test_sample.md -c config.yaml -o ../post/test-check/index.html)",
       "Bash(mkdir -p post/endtoend-test)",
       "Bash(python md2html/md2html.py md2html/test_sample.md -c md2html/config.yaml -o post/endtoend-test/index.html)",
-      "Bash(rm -rf \"D:/_MyBlog/blogweb/post/endtoend-test\")"
+      "Bash(rm -rf \"D:/_MyBlog/blogweb/post/endtoend-test\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('blog-gui.py'\\).read\\(\\)\\); print\\('Syntax OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('blog-gui.py', encoding='utf-8'\\).read\\(\\)\\); print\\('Syntax OK'\\)\")",
+      "Bash(mkdir -p post/e2e-test)",
+      "Bash(python md2html/md2html.py md2html/test_sample.md -c md2html/config.yaml -o post/e2e-test/index.html)",
+      "Bash(rm -rf post/e2e-test)",
+      "Bash(python *)"
     ]
   }
 }
