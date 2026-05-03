@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DuckLing's Blog</title>
+  <link rel="icon" href="img/favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="app">
+    <!-- Fixed frosted-glass header -->
+    <header class="site-header">
+      <img class="header-avatar" src="img/avatar.jpg" alt="avatar">
+      <span class="header-title">DuckLing's Blog</span>
+    </header>
+
+    <!-- Article list -->
+    <main class="main-content">
+      <template v-for="group in grouped" :key="group.date">
+        <div class="date-group">
+          <div class="date-heading">{{ group.date }}</div>
+          <a
+            v-for="a in group.articles"
+            :key="a.id"
+            :href="'/post/' + a.id + '/'"
+            class="post-item post-title"
+          >{{ a.title }}</a>
+        </div>
+      </template>
+    </main>
+  </div>
+
+  <!-- Vue 3 via CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="articles.js"></script>
+
+  <script>
+    const { createApp, computed } = Vue
+
+    const app = createApp({
+      setup() {
+        const grouped = computed(() => {
+          const reversed = [...articles].reverse()
+          const groups = []
+          for (const a of reversed) {
+            const last = groups[groups.length - 1]
+            if (last && last.date === a.date) {
+              last.articles.push(a)
+            } else {
+              groups.push({ date: a.date, articles: [a] })
+            }
+          }
+          return groups
+        })
+        return { grouped }
+      }
+    })
+
+    app.mount('#app')
+  </script>
+
+</body>
+</html>

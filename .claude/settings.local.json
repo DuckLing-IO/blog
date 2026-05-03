@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python md2html.py test_sample.md -c config.yaml -o ../post/test/index.html)",
+      "Bash(mkdir -p ../post/test-blog)",
+      "Bash(python md2html.py test_sample.md -c config.yaml -o ../post/test-blog/index.html)",
+      "Bash(rm -rf \"D:/_MyBlog/blogweb/post/test-blog\")",
+      "Bash(git checkout *)",
+      "Bash(python md2html.py test_sample.md -c config.yaml -o ../post/test-check/index.html)",
+      "Bash(mkdir -p post/endtoend-test)",
+      "Bash(python md2html/md2html.py md2html/test_sample.md -c md2html/config.yaml -o post/endtoend-test/index.html)",
+      "Bash(rm -rf \"D:/_MyBlog/blogweb/post/endtoend-test\")"
+    ]
+  }
+}

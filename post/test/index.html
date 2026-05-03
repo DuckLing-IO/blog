@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.blog-post .code-block .hll { background-color: #49483e }
+.blog-post .code-block { background: #272822; color: #F8F8F2 }
+.blog-post .code-block .c { color: #959077 } /* Comment */
+.blog-post .code-block .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.blog-post .code-block .esc { color: #F8F8F2 } /* Escape */
+.blog-post .code-block .g { color: #F8F8F2 } /* Generic */
+.blog-post .code-block .k { color: #66D9EF } /* Keyword */
+.blog-post .code-block .l { color: #AE81FF } /* Literal */
+.blog-post .code-block .n { color: #F8F8F2 } /* Name */
+.blog-post .code-block .o { color: #FF4689 } /* Operator */
+.blog-post .code-block .x { color: #F8F8F2 } /* Other */
+.blog-post .code-block .p { color: #F8F8F2 } /* Punctuation */
+.blog-post .code-block .ch { color: #959077 } /* Comment.Hashbang */
+.blog-post .code-block .cm { color: #959077 } /* Comment.Multiline */
+.blog-post .code-block .cp { color: #959077 } /* Comment.Preproc */
+.blog-post .code-block .cpf { color: #959077 } /* Comment.PreprocFile */
+.blog-post .code-block .c1 { color: #959077 } /* Comment.Single */
+.blog-post .code-block .cs { color: #959077 } /* Comment.Special */
+.blog-post .code-block .gd { color: #FF4689 } /* Generic.Deleted */
+.blog-post .code-block .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.blog-post .code-block .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.blog-post .code-block .gr { color: #F8F8F2 } /* Generic.Error */
+.blog-post .code-block .gh { color: #F8F8F2 } /* Generic.Heading */
+.blog-post .code-block .gi { color: #A6E22E } /* Generic.Inserted */
+.blog-post .code-block .go { color: #66D9EF } /* Generic.Output */
+.blog-post .code-block .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.blog-post .code-block .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.blog-post .code-block .gu { color: #959077 } /* Generic.Subheading */
+.blog-post .code-block .gt { color: #F8F8F2 } /* Generic.Traceback */
+.blog-post .code-block .kc { color: #66D9EF } /* Keyword.Constant */
+.blog-post .code-block .kd { color: #66D9EF } /* Keyword.Declaration */
+.blog-post .code-block .kn { color: #FF4689 } /* Keyword.Namespace */
+.blog-post .code-block .kp { color: #66D9EF } /* Keyword.Pseudo */
+.blog-post .code-block .kr { color: #66D9EF } /* Keyword.Reserved */
+.blog-post .code-block .kt { color: #66D9EF } /* Keyword.Type */
+.blog-post .code-block .ld { color: #E6DB74 } /* Literal.Date */
+.blog-post .code-block .m { color: #AE81FF } /* Literal.Number */
+.blog-post .code-block .s { color: #E6DB74 } /* Literal.String */
+.blog-post .code-block .na { color: #A6E22E } /* Name.Attribute */
+.blog-post .code-block .nb { color: #F8F8F2 } /* Name.Builtin */
+.blog-post .code-block .nc { color: #A6E22E } /* Name.Class */
+.blog-post .code-block .no { color: #66D9EF } /* Name.Constant */
+.blog-post .code-block .nd { color: #A6E22E } /* Name.Decorator */
+.blog-post .code-block .ni { color: #F8F8F2 } /* Name.Entity */
+.blog-post .code-block .ne { color: #A6E22E } /* Name.Exception */
+.blog-post .code-block .nf { color: #A6E22E } /* Name.Function */
+.blog-post .code-block .nl { color: #F8F8F2 } /* Name.Label */
+.blog-post .code-block .nn { color: #F8F8F2 } /* Name.Namespace */
+.blog-post .code-block .nx { color: #A6E22E } /* Name.Other */
+.blog-post .code-block .py { color: #F8F8F2 } /* Name.Property */
+.blog-post .code-block .nt { color: #FF4689 } /* Name.Tag */
+.blog-post .code-block .nv { color: #F8F8F2 } /* Name.Variable */
+.blog-post .code-block .ow { color: #FF4689 } /* Operator.Word */
+.blog-post .code-block .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.blog-post .code-block .w { color: #F8F8F2 } /* Text.Whitespace */
+.blog-post .code-block .mb { color: #AE81FF } /* Literal.Number.Bin */
+.blog-post .code-block .mf { color: #AE81FF } /* Literal.Number.Float */
+.blog-post .code-block .mh { color: #AE81FF } /* Literal.Number.Hex */
+.blog-post .code-block .mi { color: #AE81FF } /* Literal.Number.Integer */
+.blog-post .code-block .mo { color: #AE81FF } /* Literal.Number.Oct */
+.blog-post .code-block .sa { color: #E6DB74 } /* Literal.String.Affix */
+.blog-post .code-block .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.blog-post .code-block .sc { color: #E6DB74 } /* Literal.String.Char */
+.blog-post .code-block .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.blog-post .code-block .sd { color: #E6DB74 } /* Literal.String.Doc */
+.blog-post .code-block .s2 { color: #E6DB74 } /* Literal.String.Double */
+.blog-post .code-block .se { color: #AE81FF } /* Literal.String.Escape */
+.blog-post .code-block .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.blog-post .code-block .si { color: #E6DB74 } /* Literal.String.Interpol */
+.blog-post .code-block .sx { color: #E6DB74 } /* Literal.String.Other */
+.blog-post .code-block .sr { color: #E6DB74 } /* Literal.String.Regex */
+.blog-post .code-block .s1 { color: #E6DB74 } /* Literal.String.Single */
+.blog-post .code-block .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.blog-post .code-block .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.blog-post .code-block .fm { color: #A6E22E } /* Name.Function.Magic */
+.blog-post .code-block .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.blog-post .code-block .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.blog-post .code-block .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.blog-post .code-block .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.blog-post .code-block .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+/* === Reset & Base === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: #000000;
+    color: #e0e0e0;
+    font-family: 'Lora', Georgia, 'Noto Serif SC', serif;
+    font-size: 16px;
+    line-height: 1.8;
+    padding: 100px 1rem 2rem;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* === Site header (frosted glass) === */
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(10,10,10,.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+.site-header .header-avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.site-header .header-title {
+    font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #eee;
+    letter-spacing: -.3px;
+    text-decoration: none;
+}
+
+.site-header .header-title:hover { opacity: .7; }
+
+.blog-post {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* === Headings === */
+.blog-post h1, .blog-post h2, .blog-post h3,
+.blog-post h4, .blog-post h5, .blog-post h6 {
+    font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+}
+
+.blog-post h1 { font-size: 2em; }
+.blog-post h2 { font-size: 1.5em; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.3em; }
+.blog-post h3 { font-size: 1.25em; }
+
+/* === Post date (below title) === */
+.blog-post .post-date {
+    display: block;
+    font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+    font-size: 0.875em;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.2em;
+    margin-bottom: 2.5em;
+}
+
+/* === Paragraph === */
+.blog-post p { margin-bottom: 1.2em; }
+
+/* === Links === */
+.blog-post a {
+    color: #6ea8fe;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color .2s;
+}
+.blog-post a:hover { border-bottom-color: #6ea8fe; }
+
+/* === Images === */
+.blog-post img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 1.5em 0;
+    display: block;
+}
+
+/* === Inline code === */
+.blog-post code:not(pre code) {
+    background: rgba(255,255,255,0.08);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+    color: #f0c060;
+}
+
+/* === Code block container === */
+.blog-post .code-block {
+    background: #1e1e1e;
+    border-radius: 8px;
+    margin: 1.5em 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* Code block header — language label (pymdownx auto_title) */
+.blog-post .code-block > .filename {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5em 1em;
+    background: #2d2d2d;
+    color: #858585;
+    font-size: 0.75em;
+    font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    user-select: none;
+}
+
+/* Code content area */
+.blog-post .code-block > pre {
+    padding: 1em;
+    margin: 0;
+    overflow-x: auto;
+    font-family: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+    font-size: 0.875em;
+    line-height: 1.6;
+    background: transparent;
+}
+
+.blog-post .code-block > pre code {
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+}
+
+/* Line numbers table layout */
+.blog-post .code-block .linenodiv {
+    padding-right: 1em;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    margin-right: 1em;
+}
+
+.blog-post .code-block .linenodiv pre {
+    color: rgba(255,255,255,0.25);
+    user-select: none;
+}
+
+/* === Tables === */
+.blog-post table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5em 0;
+}
+
+.blog-post th, .blog-post td {
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 0.6em 0.8em;
+    text-align: left;
+}
+
+.blog-post th {
+    background: rgba(255,255,255,0.04);
+    font-weight: 600;
+    font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+}
+
+/* === Blockquote === */
+.blog-post blockquote {
+    border-left: 3px solid rgba(255,255,255,0.25);
+    margin: 1.5em 0;
+    padding: 0.5em 1em;
+    color: rgba(255,255,255,0.65);
+    font-style: italic;
+}
+
+.blog-post blockquote p:last-child { margin-bottom: 0; }
+
+/* === Lists === */
+.blog-post ul, .blog-post ol {
+    margin: 0.8em 0;
+    padding-left: 1.5em;
+}
+
+.blog-post li { margin-bottom: 0.3em; }
+.blog-post li:last-child { margin-bottom: 0; }
+
+/* === Horizontal rule === */
+.blog-post hr {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    margin: 2.5em 0;
+}
+
+/* === Task list === */
+.blog-post .task-list-item {
+    list-style: none;
+    margin-left: -1.5em;
+}
+
+.blog-post .task-list-item input {
+    margin-right: 0.4em;
+}
+
+/* === Footer === */
+.blog-post .post-footer-sep {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin: 3em 0 1.5em;
+}
+
+.blog-post .post-footer {
+    text-align: center;
+    font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+    font-size: 0.8em;
+    color: rgba(255,255,255,0.3);
+}
+
+.blog-post .post-footer a {
+    color: rgba(255,255,255,0.4);
+    border-bottom: none;
+    transition: color .2s;
+}
+
+.blog-post .post-footer a:hover {
+    color: #6ea8fe;
+}
+
+/* === Back link === */
+.blog-post .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 3em;
+    font-family: 'Poppins', 'Noto Sans SC', sans-serif;
+    font-size: 0.875em;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    border-bottom: none;
+    transition: color .2s;
+}
+
+.blog-post .back-link:hover {
+    color: #bbb;
+}
+
+</style>
+</head>
+<body>
+<header class="site-header">
+  <img class="header-avatar" src="/img/avatar.jpg" alt="avatar">
+  <a class="header-title" href="/">DuckLing's Blog</a>
+</header>
+<article class="blog-post">
+<h1 id="_1">一级标题</h1>
+<time class="post-date" datetime="2026-05-03T23:34:48">2026-05-03 23:34 星期日</time>
+<h2 id="2">2</h2>
+<h3 id="sanji-biaoti">sanji biaoti</h3>
+<p><img alt="image-20260503200853868" src="test/image-20260503200853868.png" /></p>
+<div class="code-block"><span class="filename">C++</span><pre><span></span><code><span class="cp">#include</span><span class="cpf">&lt;bits/stdc++.h&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><em>斜体</em></p>
+<ul>
+<li><strong>粗体</strong></li>
+<li>1</li>
+<li>2</li>
+<li>3</li>
+</ul>
+<p>丢啊我还得</p>
+<ol>
+<li>阿迪王</li>
+<li>wdawdw</li>
+<li>dawd</li>
+</ol>
+<a class="back-link" href="/">← Home</a>
+<hr class="post-footer-sep">
+<footer class="post-footer">
+<p>© 2025 - 2026 By <a href="https://duckee.top">DuckLing</a></p>
+</footer>
+</article>
+</body>
+</html>
