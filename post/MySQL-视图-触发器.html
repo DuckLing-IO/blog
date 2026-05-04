@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/article.css">
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.blog-post .code-block .hll { background-color: #49483e }
+.blog-post .code-block { background: #272822; color: #F8F8F2 }
+.blog-post .code-block .c { color: #959077 } /* Comment */
+.blog-post .code-block .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.blog-post .code-block .esc { color: #F8F8F2 } /* Escape */
+.blog-post .code-block .g { color: #F8F8F2 } /* Generic */
+.blog-post .code-block .k { color: #66D9EF } /* Keyword */
+.blog-post .code-block .l { color: #AE81FF } /* Literal */
+.blog-post .code-block .n { color: #F8F8F2 } /* Name */
+.blog-post .code-block .o { color: #FF4689 } /* Operator */
+.blog-post .code-block .x { color: #F8F8F2 } /* Other */
+.blog-post .code-block .p { color: #F8F8F2 } /* Punctuation */
+.blog-post .code-block .ch { color: #959077 } /* Comment.Hashbang */
+.blog-post .code-block .cm { color: #959077 } /* Comment.Multiline */
+.blog-post .code-block .cp { color: #959077 } /* Comment.Preproc */
+.blog-post .code-block .cpf { color: #959077 } /* Comment.PreprocFile */
+.blog-post .code-block .c1 { color: #959077 } /* Comment.Single */
+.blog-post .code-block .cs { color: #959077 } /* Comment.Special */
+.blog-post .code-block .gd { color: #FF4689 } /* Generic.Deleted */
+.blog-post .code-block .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.blog-post .code-block .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.blog-post .code-block .gr { color: #F8F8F2 } /* Generic.Error */
+.blog-post .code-block .gh { color: #F8F8F2 } /* Generic.Heading */
+.blog-post .code-block .gi { color: #A6E22E } /* Generic.Inserted */
+.blog-post .code-block .go { color: #66D9EF } /* Generic.Output */
+.blog-post .code-block .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.blog-post .code-block .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.blog-post .code-block .gu { color: #959077 } /* Generic.Subheading */
+.blog-post .code-block .gt { color: #F8F8F2 } /* Generic.Traceback */
+.blog-post .code-block .kc { color: #66D9EF } /* Keyword.Constant */
+.blog-post .code-block .kd { color: #66D9EF } /* Keyword.Declaration */
+.blog-post .code-block .kn { color: #FF4689 } /* Keyword.Namespace */
+.blog-post .code-block .kp { color: #66D9EF } /* Keyword.Pseudo */
+.blog-post .code-block .kr { color: #66D9EF } /* Keyword.Reserved */
+.blog-post .code-block .kt { color: #66D9EF } /* Keyword.Type */
+.blog-post .code-block .ld { color: #E6DB74 } /* Literal.Date */
+.blog-post .code-block .m { color: #AE81FF } /* Literal.Number */
+.blog-post .code-block .s { color: #E6DB74 } /* Literal.String */
+.blog-post .code-block .na { color: #A6E22E } /* Name.Attribute */
+.blog-post .code-block .nb { color: #F8F8F2 } /* Name.Builtin */
+.blog-post .code-block .nc { color: #A6E22E } /* Name.Class */
+.blog-post .code-block .no { color: #66D9EF } /* Name.Constant */
+.blog-post .code-block .nd { color: #A6E22E } /* Name.Decorator */
+.blog-post .code-block .ni { color: #F8F8F2 } /* Name.Entity */
+.blog-post .code-block .ne { color: #A6E22E } /* Name.Exception */
+.blog-post .code-block .nf { color: #A6E22E } /* Name.Function */
+.blog-post .code-block .nl { color: #F8F8F2 } /* Name.Label */
+.blog-post .code-block .nn { color: #F8F8F2 } /* Name.Namespace */
+.blog-post .code-block .nx { color: #A6E22E } /* Name.Other */
+.blog-post .code-block .py { color: #F8F8F2 } /* Name.Property */
+.blog-post .code-block .nt { color: #FF4689 } /* Name.Tag */
+.blog-post .code-block .nv { color: #F8F8F2 } /* Name.Variable */
+.blog-post .code-block .ow { color: #FF4689 } /* Operator.Word */
+.blog-post .code-block .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.blog-post .code-block .w { color: #F8F8F2 } /* Text.Whitespace */
+.blog-post .code-block .mb { color: #AE81FF } /* Literal.Number.Bin */
+.blog-post .code-block .mf { color: #AE81FF } /* Literal.Number.Float */
+.blog-post .code-block .mh { color: #AE81FF } /* Literal.Number.Hex */
+.blog-post .code-block .mi { color: #AE81FF } /* Literal.Number.Integer */
+.blog-post .code-block .mo { color: #AE81FF } /* Literal.Number.Oct */
+.blog-post .code-block .sa { color: #E6DB74 } /* Literal.String.Affix */
+.blog-post .code-block .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.blog-post .code-block .sc { color: #E6DB74 } /* Literal.String.Char */
+.blog-post .code-block .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.blog-post .code-block .sd { color: #E6DB74 } /* Literal.String.Doc */
+.blog-post .code-block .s2 { color: #E6DB74 } /* Literal.String.Double */
+.blog-post .code-block .se { color: #AE81FF } /* Literal.String.Escape */
+.blog-post .code-block .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.blog-post .code-block .si { color: #E6DB74 } /* Literal.String.Interpol */
+.blog-post .code-block .sx { color: #E6DB74 } /* Literal.String.Other */
+.blog-post .code-block .sr { color: #E6DB74 } /* Literal.String.Regex */
+.blog-post .code-block .s1 { color: #E6DB74 } /* Literal.String.Single */
+.blog-post .code-block .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.blog-post .code-block .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.blog-post .code-block .fm { color: #A6E22E } /* Name.Function.Magic */
+.blog-post .code-block .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.blog-post .code-block .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.blog-post .code-block .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.blog-post .code-block .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.blog-post .code-block .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body>
+<header class="site-header">
+  <img class="header-avatar" src="/img/avatar.jpg" alt="avatar">
+  <a class="header-title" href="/">DuckLing's Blog</a>
+</header>
+<article class="blog-post">
+<h1 id="mysql">[MySQL]视图&amp;触发器</h1>
+<time class="post-date" datetime="2026-01-24 11:21">2026-01-24 11:21</time>
+<h2 id="views">视图 (Views)</h2>
+<h3 id="1">1. 核心定义</h3>
+<p>视图是一个<strong>虚拟表</strong>，其内容由查询定义。</p>
+<ul>
+<li>同真实的表一样，视图包含一系列带有名称的列和行数据。</li>
+<li><strong>关键点</strong>：视图并不在数据库中以存储的数据值集形式存在（不占物理空间，只存定义）。行和列数据来自由定义视图的查询所引用的表，并且在引用视图时动态生成。</li>
+</ul>
+<h3 id="2">2. 语法操作</h3>
+<h4 id="_1">创建视图</h4>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>CREATE [OR REPLACE] [ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]
+VIEW view_name [(column_list)]
+AS select_statement
+[WITH [CASCADED | LOCAL] CHECK OPTION];
+</code></pre></div>
+<ul>
+<li><strong>ALGORITHM 参数详解</strong>:</li>
+<li><code>MERGE</code>: 将视图的SQL语句与外部查询合并（效率高，优先推荐）。</li>
+<li><code>TEMPTABLE</code>: 将视图结果存入临时表，再执行外部查询（无法更新数据）。</li>
+<li><code>UNDEFINED</code>: 让MySQL自动选择（默认）。</li>
+<li><strong>WITH CHECK OPTION</strong>: 更新视图数据时，强行保证数据仍符合视图定义的 WHERE 条件，否则报错。</li>
+</ul>
+<h4 id="_2">查看与修改</h4>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>-- 查看结构
+DESC view_name;
+SHOW CREATE VIEW view_name;
+
+-- 修改定义
+ALTER VIEW view_name AS select_statement;
+
+-- 删除视图
+DROP VIEW [IF EXISTS] view_name;
+</code></pre></div>
+<h3 id="3">3. 视图的可更新性</h3>
+<p>并非所有视图都能执行 <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>。如果视图定义包含以下任意一项，则该视图<strong>不可更新</strong>：</p>
+<ol>
+<li><strong>聚合函数</strong> (<code>SUM()</code>, <code>MIN()</code>, <code>MAX()</code>, <code>COUNT()</code> 等)。</li>
+<li><strong>DISTINCT</strong> 关键字。</li>
+<li><strong>GROUP BY</strong> 子句。</li>
+<li><strong>HAVING</strong> 子句。</li>
+<li><strong>UNION</strong> 或 <strong>UNION ALL</strong>。</li>
+<li>FROM 子句中包含<strong>不可更新的视图</strong>。</li>
+<li>SELECT 子句中的子查询。</li>
+<li>仅引用了字面值（Literal value）。</li>
+<li>ALGORITHM 指定为 <code>TEMPTABLE</code>。</li>
+</ol>
+<h2 id="triggers">触发器 (Triggers)</h2>
+<h3 id="1_1">1. 核心定义</h3>
+<p>触发器是与表有关的数据库对象，在满足定义条件（Insert/Update/Delete）时触发，并自动执行触发器中定义的语句集合。</p>
+<h3 id="2_1">2. 六种触发场景</h3>
+<p>MySQL 仅支持<strong>行级触发器</strong> (<code>FOR EACH ROW</code>)，不支持语句级触发器。</p>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>时机</th>
+<th>组合方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>INSERT</strong></td>
+<td>BEFORE / AFTER</td>
+<td><code>BEFORE INSERT</code>, <code>AFTER INSERT</code></td>
+</tr>
+<tr>
+<td><strong>UPDATE</strong></td>
+<td>BEFORE / AFTER</td>
+<td><code>BEFORE UPDATE</code>, <code>AFTER UPDATE</code></td>
+</tr>
+<tr>
+<td><strong>DELETE</strong></td>
+<td>BEFORE / AFTER</td>
+<td><code>BEFORE DELETE</code>, <code>AFTER DELETE</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-new-old">3. NEW 与 OLD 关键字</h3>
+<p>在触发器主体中，必须使用 <code>OLD</code> 和 <code>NEW</code> 关键字来访问行数据：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>NEW (新值)</th>
+<th>OLD (旧值)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>INSERT</strong></td>
+<td><strong>可用</strong> (即将/已插入的值)</td>
+<td>不可用</td>
+</tr>
+<tr>
+<td><strong>UPDATE</strong></td>
+<td><strong>可用</strong> (更新后的值)</td>
+<td><strong>可用</strong> (更新前的值)</td>
+</tr>
+<tr>
+<td><strong>DELETE</strong></td>
+<td>不可用</td>
+<td><strong>可用</strong> (即将/已删除的值)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>NEW.column_name</code>: 拥有<strong>读写</strong>权限（在 <code>BEFORE</code> 触发器中可修改 <code>NEW</code> 值以强行改变入库数据）。</li>
+<li><code>OLD.column_name</code>: 仅有<strong>只读</strong>权限。</li>
+</ul>
+<h3 id="4">4. 语法操作</h3>
+<h4 id="_3">创建触发器</h4>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>DELIMITER $$
+
+CREATE TRIGGER trigger_name
+{BEFORE | AFTER} {INSERT | UPDATE | DELETE}
+ON table_name
+FOR EACH ROW
+BEGIN
+    -- 触发器逻辑
+    -- 示例：阻断非法操作
+    -- IF NEW.amount &lt; 0 THEN 
+    --    SIGNAL SQLSTATE &#39;45000&#39; SET MESSAGE_TEXT = &#39;Amount cannot be negative&#39;; 
+    -- END IF;
+END$$
+
+DELIMITER ;
+</code></pre></div>
+<h4 id="_4">查看与删除</h4>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>-- 查看
+SHOW TRIGGERS;
+SHOW CREATE TRIGGER trigger_name;
+
+-- 删除
+DROP TRIGGER [IF EXISTS] [schema_name.]trigger_name;
+</code></pre></div>
+<h3 id="5">5. 核心限制与注意事项</h3>
+<ol>
+<li><strong>事务一致性</strong>: 触发器与触发它的语句处于<strong>同一个事务</strong>中。</li>
+<li>若 <code>BEFORE</code> 触发器失败，SQL语句不执行。</li>
+<li>若 SQL 语句失败，<code>AFTER</code> 触发器不执行。</li>
+<li>若 <code>AFTER</code> 触发器失败，整个事务回滚。</li>
+<li><strong>禁止语句</strong>: 触发器内部<strong>不能</strong>包含显式的事务控制语句（如 <code>START TRANSACTION</code>, <code>COMMIT</code>, <code>ROLLBACK</code>）。</li>
+<li><strong>返回值</strong>: 触发器不能返回结果集（Result Set），只能通过 <code>SIGNAL SQLSTATE</code> 抛出异常中断操作。</li>
+<li><strong>递归</strong>: 默认情况下，MySQL 不禁止触发器引发循环调用（需注意逻辑死循环）。</li>
+</ol>
+<a class="back-link" href="/">← Home</a>
+<hr class="post-footer-sep">
+<footer class="post-footer">
+<p>© 2025 - 2026 By <a href="https://duckee.top">DuckLing</a></p>
+</footer>
+</article>
+</body>
+</html>

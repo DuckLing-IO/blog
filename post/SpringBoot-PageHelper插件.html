@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/article.css">
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.blog-post .code-block .hll { background-color: #49483e }
+.blog-post .code-block { background: #272822; color: #F8F8F2 }
+.blog-post .code-block .c { color: #959077 } /* Comment */
+.blog-post .code-block .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.blog-post .code-block .esc { color: #F8F8F2 } /* Escape */
+.blog-post .code-block .g { color: #F8F8F2 } /* Generic */
+.blog-post .code-block .k { color: #66D9EF } /* Keyword */
+.blog-post .code-block .l { color: #AE81FF } /* Literal */
+.blog-post .code-block .n { color: #F8F8F2 } /* Name */
+.blog-post .code-block .o { color: #FF4689 } /* Operator */
+.blog-post .code-block .x { color: #F8F8F2 } /* Other */
+.blog-post .code-block .p { color: #F8F8F2 } /* Punctuation */
+.blog-post .code-block .ch { color: #959077 } /* Comment.Hashbang */
+.blog-post .code-block .cm { color: #959077 } /* Comment.Multiline */
+.blog-post .code-block .cp { color: #959077 } /* Comment.Preproc */
+.blog-post .code-block .cpf { color: #959077 } /* Comment.PreprocFile */
+.blog-post .code-block .c1 { color: #959077 } /* Comment.Single */
+.blog-post .code-block .cs { color: #959077 } /* Comment.Special */
+.blog-post .code-block .gd { color: #FF4689 } /* Generic.Deleted */
+.blog-post .code-block .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.blog-post .code-block .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.blog-post .code-block .gr { color: #F8F8F2 } /* Generic.Error */
+.blog-post .code-block .gh { color: #F8F8F2 } /* Generic.Heading */
+.blog-post .code-block .gi { color: #A6E22E } /* Generic.Inserted */
+.blog-post .code-block .go { color: #66D9EF } /* Generic.Output */
+.blog-post .code-block .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.blog-post .code-block .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.blog-post .code-block .gu { color: #959077 } /* Generic.Subheading */
+.blog-post .code-block .gt { color: #F8F8F2 } /* Generic.Traceback */
+.blog-post .code-block .kc { color: #66D9EF } /* Keyword.Constant */
+.blog-post .code-block .kd { color: #66D9EF } /* Keyword.Declaration */
+.blog-post .code-block .kn { color: #FF4689 } /* Keyword.Namespace */
+.blog-post .code-block .kp { color: #66D9EF } /* Keyword.Pseudo */
+.blog-post .code-block .kr { color: #66D9EF } /* Keyword.Reserved */
+.blog-post .code-block .kt { color: #66D9EF } /* Keyword.Type */
+.blog-post .code-block .ld { color: #E6DB74 } /* Literal.Date */
+.blog-post .code-block .m { color: #AE81FF } /* Literal.Number */
+.blog-post .code-block .s { color: #E6DB74 } /* Literal.String */
+.blog-post .code-block .na { color: #A6E22E } /* Name.Attribute */
+.blog-post .code-block .nb { color: #F8F8F2 } /* Name.Builtin */
+.blog-post .code-block .nc { color: #A6E22E } /* Name.Class */
+.blog-post .code-block .no { color: #66D9EF } /* Name.Constant */
+.blog-post .code-block .nd { color: #A6E22E } /* Name.Decorator */
+.blog-post .code-block .ni { color: #F8F8F2 } /* Name.Entity */
+.blog-post .code-block .ne { color: #A6E22E } /* Name.Exception */
+.blog-post .code-block .nf { color: #A6E22E } /* Name.Function */
+.blog-post .code-block .nl { color: #F8F8F2 } /* Name.Label */
+.blog-post .code-block .nn { color: #F8F8F2 } /* Name.Namespace */
+.blog-post .code-block .nx { color: #A6E22E } /* Name.Other */
+.blog-post .code-block .py { color: #F8F8F2 } /* Name.Property */
+.blog-post .code-block .nt { color: #FF4689 } /* Name.Tag */
+.blog-post .code-block .nv { color: #F8F8F2 } /* Name.Variable */
+.blog-post .code-block .ow { color: #FF4689 } /* Operator.Word */
+.blog-post .code-block .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.blog-post .code-block .w { color: #F8F8F2 } /* Text.Whitespace */
+.blog-post .code-block .mb { color: #AE81FF } /* Literal.Number.Bin */
+.blog-post .code-block .mf { color: #AE81FF } /* Literal.Number.Float */
+.blog-post .code-block .mh { color: #AE81FF } /* Literal.Number.Hex */
+.blog-post .code-block .mi { color: #AE81FF } /* Literal.Number.Integer */
+.blog-post .code-block .mo { color: #AE81FF } /* Literal.Number.Oct */
+.blog-post .code-block .sa { color: #E6DB74 } /* Literal.String.Affix */
+.blog-post .code-block .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.blog-post .code-block .sc { color: #E6DB74 } /* Literal.String.Char */
+.blog-post .code-block .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.blog-post .code-block .sd { color: #E6DB74 } /* Literal.String.Doc */
+.blog-post .code-block .s2 { color: #E6DB74 } /* Literal.String.Double */
+.blog-post .code-block .se { color: #AE81FF } /* Literal.String.Escape */
+.blog-post .code-block .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.blog-post .code-block .si { color: #E6DB74 } /* Literal.String.Interpol */
+.blog-post .code-block .sx { color: #E6DB74 } /* Literal.String.Other */
+.blog-post .code-block .sr { color: #E6DB74 } /* Literal.String.Regex */
+.blog-post .code-block .s1 { color: #E6DB74 } /* Literal.String.Single */
+.blog-post .code-block .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.blog-post .code-block .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.blog-post .code-block .fm { color: #A6E22E } /* Name.Function.Magic */
+.blog-post .code-block .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.blog-post .code-block .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.blog-post .code-block .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.blog-post .code-block .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.blog-post .code-block .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body>
+<header class="site-header">
+  <img class="header-avatar" src="/img/avatar.jpg" alt="avatar">
+  <a class="header-title" href="/">DuckLing's Blog</a>
+</header>
+<article class="blog-post">
+<h1 id="springbootpagehelper">[SpringBoot]PageHelper插件</h1>
+<time class="post-date" datetime="2026-01-27 14:19">2026-01-27 14:19</time>
+<blockquote>
+<p><strong>PageHelper是第三方提供的Mybatis框架中的一款功能强大、方便易用的分页插件，支持任何形式的单标、多表的分页查询。</strong></p>
+<p>官网：https://pagehelper.github.io/</p>
+</blockquote>
+<h1 id="_1">依赖</h1>
+<div class="code-block"><span class="filename">XML</span><pre><span></span><code><span class="cm">&lt;!--分页插件PageHelper--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.github.pagehelper<span class="nt">&lt;/groupId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>pagehelper-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+<span class="w">    </span><span class="nt">&lt;version&gt;</span>1.4.7<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div>
+<h1 id="_2">无插件下的分页查询操作</h1>
+<h2 id="service">Service层</h2>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="c1">//参数：</span>
+<span class="w">    </span><span class="c1">//-page 要查询的页数</span>
+<span class="w">    </span><span class="c1">//-pageSize 每页的数据数</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">pageResult</span><span class="o">&lt;</span><span class="n">Emp</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">page</span><span class="p">(</span><span class="n">Integer</span><span class="w"> </span><span class="n">page</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">pageSize</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">Long</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">empMapper</span><span class="p">.</span><span class="na">count</span><span class="p">();</span><span class="w"> </span><span class="c1">//调用Mapper层的方法获取总数据数</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Emp</span><span class="o">&gt;</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">empMapper</span><span class="p">.</span><span class="na">list</span><span class="p">((</span><span class="n">page</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pageSize</span><span class="p">,</span><span class="w"> </span><span class="n">pageSize</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//调用Mapper层的方法调用当前页的数据列表</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">pageResult</span><span class="o">&lt;</span><span class="n">Emp</span><span class="o">&gt;</span><span class="p">(</span><span class="n">count</span><span class="p">,</span><span class="w"> </span><span class="n">list</span><span class="p">);</span>
+<span class="w">        </span><span class="c1">//返回给Controller层一个实体类</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<h2 id="mapper">Mapper层</h2>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="c1">//查询数据总数</span>
+<span class="w">    </span><span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select count(*) from emp e left join dept d on e.dept_id = d.id&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">Long</span><span class="w"> </span><span class="nf">count</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">//分页查询</span>
+<span class="w">    </span><span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select e.* , d.name deptName &quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">            </span><span class="s">&quot;from emp e left join dept d on e.dept_id = d.id &quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">            </span><span class="s">&quot;order by e.update_time desc &quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">            </span><span class="s">&quot;limit #{start}, #{pageSize}&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Emp</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">Integer</span><span class="w"> </span><span class="n">start</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">pageSize</span><span class="p">);</span>
+</code></pre></div>
+<h1 id="pagehelper">PageHelper插件优化</h1>
+<h2 id="service_1">Service层</h2>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">PageResult</span><span class="w"> </span><span class="nf">page</span><span class="p">(</span><span class="n">Integer</span><span class="w"> </span><span class="n">page</span><span class="p">,</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">pageSize</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="c1">//1. 设置分页参数</span>
+<span class="w">        </span><span class="n">PageHelper</span><span class="p">.</span><span class="na">startPage</span><span class="p">(</span><span class="n">page</span><span class="p">,</span><span class="n">pageSize</span><span class="p">);</span>
+
+<span class="w">        </span><span class="c1">//2. 执行查询</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Emp</span><span class="o">&gt;</span><span class="w"> </span><span class="n">empList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">empMapper</span><span class="p">.</span><span class="na">list</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">//强制类型转换</span>
+<span class="w">        </span><span class="n">Page</span><span class="o">&lt;</span><span class="n">Emp</span><span class="o">&gt;</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Page</span><span class="o">&lt;</span><span class="n">Emp</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">empList</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">//3. 封装结果</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PageResult</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="na">getTotal</span><span class="p">(),</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="na">getResult</span><span class="p">());</span>
+<span class="w">    </span><span class="p">}</span>
+</code></pre></div>
+<h2 id="mapper_1">Mapper层</h2>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="w">    </span><span class="nd">@Select</span><span class="p">(</span><span class="s">&quot;select e.*, d.name deptName &quot;</span><span class="w"> </span><span class="o">+</span>
+<span class="w">            </span><span class="s">&quot;from emp as e left join dept as d on e.dept_id = d.id&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">Emp</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">list</span><span class="p">();</span>
+</code></pre></div>
+<h1 id="_3">实现原理</h1>
+<p>引用PageHelper插件后只需在Mapper层声明一个查询所需属性的SELECT语句即可，在运行时，该插件会自动注入SQL语句</p>
+<ul>
+<li>第一条SQL语句，用来查询总记录数</li>
+</ul>
+<p>将查询返回的字段列表替换成了 <code>count(0)</code> 来统计总记录数。</p>
+<ul>
+<li>第二条SQL语句，用来进行分页查询</li>
+</ul>
+<p>查询指定页码对应 的数据列表。在SQL语句之后拼接上了<code>limit</code>进行分页查询</p>
+<p><img alt="在JVM控制台中的信息" src="SpringBoot-PageHelper插件/image-20260126153411332.png" /></p>
+<p>PageHelper在进行分页查询时，会执行上述图片中两条SQL语句，并将查询到的总记录数，与数据列表封装到了 <code>Page&lt;Emp&gt;</code> 对象中，我们再获取查询结果时，只需要调用Page对象的方法就可以获取。</p>
+<h1 id="_4">注意事项</h1>
+<ul>
+<li>
+<p>PageHelper实现分页查询时，SQL语句的结尾一定一定一定不要加分号(;).。</p>
+</li>
+<li>
+<p>PageHelper只会对紧跟在其后的第一条SQL语句进行分页处理。</p>
+</li>
+</ul>
+<p>若在Service方法中多写一条SQL语句 则会原样输出</p>
+<p><img alt="错误示范" src="SpringBoot-PageHelper插件/image-20260126154029085.png" /></p>
+<p>因为调用的Mapper层中的SQL语句原本是查整个表的数据 所以第二个查询操作只会原样输出整个表的数据</p>
+<a class="back-link" href="/">← Home</a>
+<hr class="post-footer-sep">
+<footer class="post-footer">
+<p>© 2025 - 2026 By <a href="https://duckee.top">DuckLing</a></p>
+</footer>
+</article>
+</body>
+</html>

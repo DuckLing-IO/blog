@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/article.css">
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.blog-post .code-block .hll { background-color: #49483e }
+.blog-post .code-block { background: #272822; color: #F8F8F2 }
+.blog-post .code-block .c { color: #959077 } /* Comment */
+.blog-post .code-block .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.blog-post .code-block .esc { color: #F8F8F2 } /* Escape */
+.blog-post .code-block .g { color: #F8F8F2 } /* Generic */
+.blog-post .code-block .k { color: #66D9EF } /* Keyword */
+.blog-post .code-block .l { color: #AE81FF } /* Literal */
+.blog-post .code-block .n { color: #F8F8F2 } /* Name */
+.blog-post .code-block .o { color: #FF4689 } /* Operator */
+.blog-post .code-block .x { color: #F8F8F2 } /* Other */
+.blog-post .code-block .p { color: #F8F8F2 } /* Punctuation */
+.blog-post .code-block .ch { color: #959077 } /* Comment.Hashbang */
+.blog-post .code-block .cm { color: #959077 } /* Comment.Multiline */
+.blog-post .code-block .cp { color: #959077 } /* Comment.Preproc */
+.blog-post .code-block .cpf { color: #959077 } /* Comment.PreprocFile */
+.blog-post .code-block .c1 { color: #959077 } /* Comment.Single */
+.blog-post .code-block .cs { color: #959077 } /* Comment.Special */
+.blog-post .code-block .gd { color: #FF4689 } /* Generic.Deleted */
+.blog-post .code-block .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.blog-post .code-block .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.blog-post .code-block .gr { color: #F8F8F2 } /* Generic.Error */
+.blog-post .code-block .gh { color: #F8F8F2 } /* Generic.Heading */
+.blog-post .code-block .gi { color: #A6E22E } /* Generic.Inserted */
+.blog-post .code-block .go { color: #66D9EF } /* Generic.Output */
+.blog-post .code-block .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.blog-post .code-block .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.blog-post .code-block .gu { color: #959077 } /* Generic.Subheading */
+.blog-post .code-block .gt { color: #F8F8F2 } /* Generic.Traceback */
+.blog-post .code-block .kc { color: #66D9EF } /* Keyword.Constant */
+.blog-post .code-block .kd { color: #66D9EF } /* Keyword.Declaration */
+.blog-post .code-block .kn { color: #FF4689 } /* Keyword.Namespace */
+.blog-post .code-block .kp { color: #66D9EF } /* Keyword.Pseudo */
+.blog-post .code-block .kr { color: #66D9EF } /* Keyword.Reserved */
+.blog-post .code-block .kt { color: #66D9EF } /* Keyword.Type */
+.blog-post .code-block .ld { color: #E6DB74 } /* Literal.Date */
+.blog-post .code-block .m { color: #AE81FF } /* Literal.Number */
+.blog-post .code-block .s { color: #E6DB74 } /* Literal.String */
+.blog-post .code-block .na { color: #A6E22E } /* Name.Attribute */
+.blog-post .code-block .nb { color: #F8F8F2 } /* Name.Builtin */
+.blog-post .code-block .nc { color: #A6E22E } /* Name.Class */
+.blog-post .code-block .no { color: #66D9EF } /* Name.Constant */
+.blog-post .code-block .nd { color: #A6E22E } /* Name.Decorator */
+.blog-post .code-block .ni { color: #F8F8F2 } /* Name.Entity */
+.blog-post .code-block .ne { color: #A6E22E } /* Name.Exception */
+.blog-post .code-block .nf { color: #A6E22E } /* Name.Function */
+.blog-post .code-block .nl { color: #F8F8F2 } /* Name.Label */
+.blog-post .code-block .nn { color: #F8F8F2 } /* Name.Namespace */
+.blog-post .code-block .nx { color: #A6E22E } /* Name.Other */
+.blog-post .code-block .py { color: #F8F8F2 } /* Name.Property */
+.blog-post .code-block .nt { color: #FF4689 } /* Name.Tag */
+.blog-post .code-block .nv { color: #F8F8F2 } /* Name.Variable */
+.blog-post .code-block .ow { color: #FF4689 } /* Operator.Word */
+.blog-post .code-block .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.blog-post .code-block .w { color: #F8F8F2 } /* Text.Whitespace */
+.blog-post .code-block .mb { color: #AE81FF } /* Literal.Number.Bin */
+.blog-post .code-block .mf { color: #AE81FF } /* Literal.Number.Float */
+.blog-post .code-block .mh { color: #AE81FF } /* Literal.Number.Hex */
+.blog-post .code-block .mi { color: #AE81FF } /* Literal.Number.Integer */
+.blog-post .code-block .mo { color: #AE81FF } /* Literal.Number.Oct */
+.blog-post .code-block .sa { color: #E6DB74 } /* Literal.String.Affix */
+.blog-post .code-block .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.blog-post .code-block .sc { color: #E6DB74 } /* Literal.String.Char */
+.blog-post .code-block .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.blog-post .code-block .sd { color: #E6DB74 } /* Literal.String.Doc */
+.blog-post .code-block .s2 { color: #E6DB74 } /* Literal.String.Double */
+.blog-post .code-block .se { color: #AE81FF } /* Literal.String.Escape */
+.blog-post .code-block .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.blog-post .code-block .si { color: #E6DB74 } /* Literal.String.Interpol */
+.blog-post .code-block .sx { color: #E6DB74 } /* Literal.String.Other */
+.blog-post .code-block .sr { color: #E6DB74 } /* Literal.String.Regex */
+.blog-post .code-block .s1 { color: #E6DB74 } /* Literal.String.Single */
+.blog-post .code-block .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.blog-post .code-block .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.blog-post .code-block .fm { color: #A6E22E } /* Name.Function.Magic */
+.blog-post .code-block .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.blog-post .code-block .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.blog-post .code-block .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.blog-post .code-block .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.blog-post .code-block .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body>
+<header class="site-header">
+  <img class="header-avatar" src="/img/avatar.jpg" alt="avatar">
+  <a class="header-title" href="/">DuckLing's Blog</a>
+</header>
+<article class="blog-post">
+<h1 id="mysql">[MySQL]锁</h1>
+<time class="post-date" datetime="2026-01-24 11:21">2026-01-24 11:21</time>
+<h1 id="mysql_1">MySQL 锁机制</h1>
+<blockquote>
+<p><strong>核心摘要</strong>：MySQL 的锁机制主要用于管理共享资源的并发访问。根据加锁粒度，主要分为 <strong>全局锁</strong>、<strong>表级锁</strong> 和 <strong>行级锁</strong>。</p>
+</blockquote>
+<h2 id="global-locks">一、 全局锁 (Global Locks)</h2>
+<p>全局锁就是对整个数据库实例加锁。</p>
+<h3 id="1">1. 核心作用</h3>
+<p>让整个库处于 <strong>只读状态 (Read-Only)</strong>。</p>
+<h3 id="2">2. 语法演示</h3>
+<ul>
+<li><strong>加锁命令</strong>：</li>
+</ul>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>FLUSH TABLES WITH READ LOCK;
+</code></pre></div>
+<ul>
+<li><strong>解锁命令</strong>：</li>
+</ul>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>UNLOCK TABLES;
+</code></pre></div>
+<p><em>(注意：如果客户端连接断开，锁也会自动释放)</em></p>
+<h3 id="3">3. 锁生效后的行为代码演示</h3>
+<p>假设我们执行了上面的加锁命令，此时不同类型的 SQL 语句表现如下：</p>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>-- 1. 查询语句 (DQL) -&gt; ✅ 成功
+SELECT * FROM user_info;
+
+-- 2. 数据更新语句 (DML) -&gt; ❌ 阻塞 (Blocked)
+INSERT INTO user_info (name) VALUES (&#39;Alice&#39;);
+-- 状态：一直等待，直到全局锁释放或超时
+
+-- 3. 表结构修改语句 (DDL) -&gt; ❌ 阻塞 (Blocked)
+ALTER TABLE user_info ADD COLUMN age INT;
+</code></pre></div>
+<h2 id="table-level-locks">二、 表级锁 (Table-level Locks)</h2>
+<p>MySQL 的表级锁主要包含两种：<strong>显式表锁</strong> 和 <strong>元数据锁 (MDL)</strong>。</p>
+<h3 id="1-explicit-table-locks">1. 显式表锁 (Explicit Table Locks)</h3>
+<p>显式表锁分为 <strong>读锁 (Read Lock)</strong> 和 <strong>写锁 (Write Lock)</strong>。</p>
+<h4 id="1-read-lock">(1) 表读锁 (Read Lock)</h4>
+<ul>
+<li><strong>语法</strong>：<code>LOCK TABLES 表名 READ;</code></li>
+<li><strong>特性</strong>：<strong>共享锁</strong>。当前线程和其他线程都<strong>只能读，不能写</strong>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>当前持有锁的线程 (Session A)</th>
+<th>其他线程 (Session B)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>读 (SELECT)</strong></td>
+<td>✅ 可执行</td>
+<td>✅ 可执行</td>
+</tr>
+<tr>
+<td><strong>写 (UPDATE/INSERT)</strong></td>
+<td>❌ <strong>报错</strong> (Can't update table 'x' while 'x' is locked)</td>
+<td>⏸️ <strong>阻塞等待</strong> (Waiting for table metadata lock)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-write-lock">(2) 表写锁 (Write Lock)</h4>
+<ul>
+<li><strong>语法</strong>：<code>LOCK TABLES 表名 WRITE;</code></li>
+<li><strong>特性</strong>：<strong>排他锁</strong>。当前线程可以读写，<strong>其他线程既不能读也不能写</strong>。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>当前持有锁的线程 (Session A)</th>
+<th>其他线程 (Session B)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>读 (SELECT)</strong></td>
+<td>✅ 可执行</td>
+<td>⏸️ <strong>阻塞等待</strong></td>
+</tr>
+<tr>
+<td><strong>写 (UPDATE/INSERT)</strong></td>
+<td>✅ 可执行</td>
+<td>⏸️ <strong>阻塞等待</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-metadata-lock-mdl">2. 元数据锁 (Metadata Lock - MDL)</h3>
+<ul>
+<li><strong>触发方式</strong>：系统自动添加，无需显式 SQL。</li>
+<li><strong>目的</strong>：维护表结构一致性。</li>
+</ul>
+<h4 id="mdl">MDL 锁类型详解</h4>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>触发场景</th>
+<th>兼容性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MDL 读锁</strong></td>
+<td>对表进行增删改查 (SELECT, INSERT, UPDATE...)</td>
+<td>与其他 <strong>MDL 读锁</strong> 兼容与 <strong>MDL 写锁</strong> 互斥</td>
+</tr>
+<tr>
+<td><strong>MDL 写锁</strong></td>
+<td>对表结构进行修改 (ALTER TABLE, DROP TABLE...)</td>
+<td>与 <strong>所有锁</strong> (读/写) 都互斥</td>
+</tr>
+</tbody>
+</table>
+<p><strong>演示示例</strong>：</p>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>-- Session A (正在查询，未提交，持有 MDL 读锁)
+BEGIN;
+SELECT * FROM student; 
+
+-- Session B (尝试修改表结构，需要申请 MDL 写锁)
+ALTER TABLE student ADD COLUMN score INT;
+-- 结果：⏸️ 阻塞 (Blocked)，因为 MDL 读写互斥
+
+-- Session C (尝试查询)
+SELECT * FROM student;
+-- 结果：⏸️ 阻塞！(通常会被 Session B 的写锁请求阻塞在队列中)
+</code></pre></div>
+<h2 id="row-level-locks">三、 行级锁 (Row-level Locks)</h2>
+<p><strong>前提</strong>：行锁由存储引擎实现，<strong>InnoDB 支持，MyISAM 不支持</strong>。</p>
+<p>InnoDB 的行锁主要分为 <strong>共享锁 (S锁)</strong> 和 <strong>排他锁 (X锁)</strong>。</p>
+<h3 id="1-shared-lock-s">1. 共享锁 (Shared Lock / S锁)</h3>
+<ul>
+<li>
+<p><strong>概念</strong>：又称读锁。允许一个事务去读一行，阻止其他事务获得该行的排他锁。</p>
+</li>
+<li>
+<p><strong>适用场景</strong>：确保读取的数据在处理期间不被他人修改。</p>
+</li>
+<li>
+<p><strong>SQL 语法</strong>：</p>
+</li>
+</ul>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>-- 手动添加 S 锁
+SELECT * FROM student WHERE id = 1 LOCK IN SHARE MODE;
+-- 或者 MySQL 8.0+ 写法
+SELECT * FROM student WHERE id = 1 FOR SHARE;
+</code></pre></div>
+<h3 id="2-exclusive-lock-x">2. 排他锁 (Exclusive Lock / X锁)</h3>
+<ul>
+<li>
+<p><strong>概念</strong>：又称写锁。允许获取排他锁的事务更新数据，阻止其他事务获取该行的 S 锁或 X 锁。</p>
+</li>
+<li>
+<p><strong>SQL 语法</strong>：</p>
+</li>
+</ul>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>-- 1. 自动添加：对于 UPDATE, DELETE, INSERT 语句，InnoDB 会自动给涉及的数据行加 X 锁
+UPDATE student SET name = &#39;Tom&#39; WHERE id = 1;
+
+-- 2. 手动添加：查询时顺便加 X 锁
+SELECT * FROM student WHERE id = 1 FOR UPDATE;
+</code></pre></div>
+<h3 id="3_1">3. 行锁的兼容性矩阵</h3>
+<table>
+<thead>
+<tr>
+<th>当前锁 \ 请求锁</th>
+<th>S 锁 (共享/读)</th>
+<th>X 锁 (排他/写)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>已持有 S 锁</strong></td>
+<td>✅ 兼容 (大家都能读)</td>
+<td>❌ 冲突 (别人不能改)</td>
+</tr>
+<tr>
+<td><strong>已持有 X 锁</strong></td>
+<td>❌ 冲突 (别人不能读)</td>
+<td>❌ 冲突 (别人不能改)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="intention-locks">四、 意向锁 (Intention Locks)</h2>
+<p>这是一种<strong>表级锁</strong>，主要为了解决行锁和表锁的冲突问题。</p>
+<h3 id="1_1">1. 场景问题</h3>
+<p>假设事务 A 锁住了表中的<strong>某一行</strong>（加了行级 X 锁）。 此时事务 B 想要申请<strong>整个表的写锁</strong> (<code>LOCK TABLES ... WRITE</code>)。 如果没有意向锁，事务 B 需要遍历表中的每一行，查看是否被锁住。这效率极低。</p>
+<h3 id="2_1">2. 解决方案</h3>
+<ul>
+<li><strong>意向共享锁 (IS)</strong>：事务打算给数据行加行级 S 锁前，必须先取得该表的 IS 锁。</li>
+<li><strong>意向排他锁 (IX)</strong>：事务打算给数据行加行级 X 锁前，必须先取得该表的 IX 锁。</li>
+</ul>
+<h3 id="3_2">3. 效果</h3>
+<p>事务 B 申请表锁时，只需要看表上是否有 IX 锁。如果有，说明表里有人正在改数据，直接阻塞等待，不需要遍历。</p>
+<h2 id="_1">五、 锁的算法</h2>
+<p>InnoDB 的行锁实际上是锁在<strong>索引</strong>上的。</p>
+<ol>
+<li><strong>Record Lock</strong>：单个行记录上的锁。</li>
+<li><code>SELECT * FROM t WHERE id = 1 FOR UPDATE;</code> (id 是主键)</li>
+<li><strong>Gap Lock (间隙锁)</strong>：锁定一个范围，但不包含记录本身。</li>
+<li>防止幻读 (Phantom Read)。</li>
+<li>例如锁住 (5, 10) 之间的空隙，防止插入 id=7 的记录。</li>
+<li><strong>Next-Key Lock</strong>：Record Lock + Gap Lock。</li>
+<li>锁定一个范围，并且锁定记录本身。</li>
+<li>InnoDB 默认加锁单位。</li>
+</ol>
+<a class="back-link" href="/">← Home</a>
+<hr class="post-footer-sep">
+<footer class="post-footer">
+<p>© 2025 - 2026 By <a href="https://duckee.top">DuckLing</a></p>
+</footer>
+</article>
+</body>
+</html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/article.css">
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.blog-post .code-block .hll { background-color: #49483e }
+.blog-post .code-block { background: #272822; color: #F8F8F2 }
+.blog-post .code-block .c { color: #959077 } /* Comment */
+.blog-post .code-block .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.blog-post .code-block .esc { color: #F8F8F2 } /* Escape */
+.blog-post .code-block .g { color: #F8F8F2 } /* Generic */
+.blog-post .code-block .k { color: #66D9EF } /* Keyword */
+.blog-post .code-block .l { color: #AE81FF } /* Literal */
+.blog-post .code-block .n { color: #F8F8F2 } /* Name */
+.blog-post .code-block .o { color: #FF4689 } /* Operator */
+.blog-post .code-block .x { color: #F8F8F2 } /* Other */
+.blog-post .code-block .p { color: #F8F8F2 } /* Punctuation */
+.blog-post .code-block .ch { color: #959077 } /* Comment.Hashbang */
+.blog-post .code-block .cm { color: #959077 } /* Comment.Multiline */
+.blog-post .code-block .cp { color: #959077 } /* Comment.Preproc */
+.blog-post .code-block .cpf { color: #959077 } /* Comment.PreprocFile */
+.blog-post .code-block .c1 { color: #959077 } /* Comment.Single */
+.blog-post .code-block .cs { color: #959077 } /* Comment.Special */
+.blog-post .code-block .gd { color: #FF4689 } /* Generic.Deleted */
+.blog-post .code-block .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.blog-post .code-block .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.blog-post .code-block .gr { color: #F8F8F2 } /* Generic.Error */
+.blog-post .code-block .gh { color: #F8F8F2 } /* Generic.Heading */
+.blog-post .code-block .gi { color: #A6E22E } /* Generic.Inserted */
+.blog-post .code-block .go { color: #66D9EF } /* Generic.Output */
+.blog-post .code-block .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.blog-post .code-block .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.blog-post .code-block .gu { color: #959077 } /* Generic.Subheading */
+.blog-post .code-block .gt { color: #F8F8F2 } /* Generic.Traceback */
+.blog-post .code-block .kc { color: #66D9EF } /* Keyword.Constant */
+.blog-post .code-block .kd { color: #66D9EF } /* Keyword.Declaration */
+.blog-post .code-block .kn { color: #FF4689 } /* Keyword.Namespace */
+.blog-post .code-block .kp { color: #66D9EF } /* Keyword.Pseudo */
+.blog-post .code-block .kr { color: #66D9EF } /* Keyword.Reserved */
+.blog-post .code-block .kt { color: #66D9EF } /* Keyword.Type */
+.blog-post .code-block .ld { color: #E6DB74 } /* Literal.Date */
+.blog-post .code-block .m { color: #AE81FF } /* Literal.Number */
+.blog-post .code-block .s { color: #E6DB74 } /* Literal.String */
+.blog-post .code-block .na { color: #A6E22E } /* Name.Attribute */
+.blog-post .code-block .nb { color: #F8F8F2 } /* Name.Builtin */
+.blog-post .code-block .nc { color: #A6E22E } /* Name.Class */
+.blog-post .code-block .no { color: #66D9EF } /* Name.Constant */
+.blog-post .code-block .nd { color: #A6E22E } /* Name.Decorator */
+.blog-post .code-block .ni { color: #F8F8F2 } /* Name.Entity */
+.blog-post .code-block .ne { color: #A6E22E } /* Name.Exception */
+.blog-post .code-block .nf { color: #A6E22E } /* Name.Function */
+.blog-post .code-block .nl { color: #F8F8F2 } /* Name.Label */
+.blog-post .code-block .nn { color: #F8F8F2 } /* Name.Namespace */
+.blog-post .code-block .nx { color: #A6E22E } /* Name.Other */
+.blog-post .code-block .py { color: #F8F8F2 } /* Name.Property */
+.blog-post .code-block .nt { color: #FF4689 } /* Name.Tag */
+.blog-post .code-block .nv { color: #F8F8F2 } /* Name.Variable */
+.blog-post .code-block .ow { color: #FF4689 } /* Operator.Word */
+.blog-post .code-block .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.blog-post .code-block .w { color: #F8F8F2 } /* Text.Whitespace */
+.blog-post .code-block .mb { color: #AE81FF } /* Literal.Number.Bin */
+.blog-post .code-block .mf { color: #AE81FF } /* Literal.Number.Float */
+.blog-post .code-block .mh { color: #AE81FF } /* Literal.Number.Hex */
+.blog-post .code-block .mi { color: #AE81FF } /* Literal.Number.Integer */
+.blog-post .code-block .mo { color: #AE81FF } /* Literal.Number.Oct */
+.blog-post .code-block .sa { color: #E6DB74 } /* Literal.String.Affix */
+.blog-post .code-block .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.blog-post .code-block .sc { color: #E6DB74 } /* Literal.String.Char */
+.blog-post .code-block .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.blog-post .code-block .sd { color: #E6DB74 } /* Literal.String.Doc */
+.blog-post .code-block .s2 { color: #E6DB74 } /* Literal.String.Double */
+.blog-post .code-block .se { color: #AE81FF } /* Literal.String.Escape */
+.blog-post .code-block .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.blog-post .code-block .si { color: #E6DB74 } /* Literal.String.Interpol */
+.blog-post .code-block .sx { color: #E6DB74 } /* Literal.String.Other */
+.blog-post .code-block .sr { color: #E6DB74 } /* Literal.String.Regex */
+.blog-post .code-block .s1 { color: #E6DB74 } /* Literal.String.Single */
+.blog-post .code-block .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.blog-post .code-block .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.blog-post .code-block .fm { color: #A6E22E } /* Name.Function.Magic */
+.blog-post .code-block .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.blog-post .code-block .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.blog-post .code-block .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.blog-post .code-block .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.blog-post .code-block .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+</style>
+</head>
+<body>
+<header class="site-header">
+  <img class="header-avatar" src="/img/avatar.jpg" alt="avatar">
+  <a class="header-title" href="/">DuckLing's Blog</a>
+</header>
+<article class="blog-post">
+<h1 id="springboot">[SpringBoot]三层框架的分层解耦</h1>
+<time class="post-date" datetime="2026-01-24 14:39">2026-01-24 14:39</time>
+<h1 id="_1">三层框架</h1>
+<h2 id="_2">介绍</h2>
+<p>在开发中，尽可能让每一个接口，方法，类的职责分工明确，提高可读性，扩展性；利于后期维护。</p>
+<p>这种原则叫做<strong>单一职责原则</strong>：</p>
+<blockquote>
+<p>一个类或一个方法，就只做一件事情，只管一块功能。</p>
+</blockquote>
+<p>对于一个业务，可以拆分成三层：</p>
+<ol>
+<li>Controller：控制层。接收前端发送的请求，对请求进行处理，并响应数据。</li>
+<li>Service：业务逻辑层。处理具体的业务逻辑。</li>
+<li>Dao：数据访问层(Data Access Object)，也称为持久层。负责数据访问操作，包括数据的增、删、改、查。</li>
+</ol>
+<p>执行流程为：</p>
+<ul>
+<li>前端发起请求</li>
+<li>Controller层接收请求</li>
+<li>Controller层调用Service进行逻辑处理</li>
+<li>Service去调用Dao获取所需数据</li>
+<li>Dao层从网路上或者数据库中拿到数据并返回Service</li>
+<li>Service对待处理数据进行逻辑处理并返回Controller</li>
+<li>Controller把最终结果响应给前端</li>
+<li>前端收到响应</li>
+</ul>
+<p>针对于这三层 一般会创建第三个包方便管理</p>
+<ul>
+<li><code>controller</code></li>
+<li><code>service</code></li>
+<li><code>dao</code></li>
+</ul>
+<p>对于每个包内一般采用<strong>面向接口</strong>的方式进行代码书写:</p>
+<p>在每一层的包下书写接口类，再定义一个<code>impl</code>包用于书写该接口的实现类</p>
+<p>实现类的命名规则为<code>接口名Impl</code>；示例如下：</p>
+<p><img alt="目录结构演示" src="SpringBoot-分层解耦/p1.png" /></p>
+<h1 id="_3">分层解耦</h1>
+<h2 id="_4">分析问题</h2>
+<p>对于当前业务逻辑：当前端请求地址<code>/list</code>时，后端需要从项目文件下的<code>src/main/resources/user.txt</code>文件进行读取数据</p>
+<p>文件格式如下：</p>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>1,daqiao,1234567890,大乔,22,2024-07-15 15:05:45
+2,xiaoqiao,1234567890,小乔,18,2024-07-15 15:12:09
+3,diaochan,1234567890,貂蝉,21,2024-07-15 15:07:16
+4,lvbu,1234567890,吕布,28,2024-07-16 10:05:15
+5,zhaoyun,1234567890,赵云,27,2024-07-16 11:03:28
+6,zhangfei,1234567890,张飞,31,2024-07-16 11:03:28
+7,guanyu,1234567890,关羽,34,2024-07-16 12:05:12
+8,liubei,1234567890,刘备,37,2024-07-16 15:03:28
+</code></pre></div>
+<p>读取到数据后进行拆分并封装成已经定义好的类<code>User</code>：</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="kn">package</span><span class="w"> </span><span class="nn">io.duckling.pojo</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lombok.AllArgsConstructor</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lombok.Data</span><span class="p">;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">lombok.NoArgsConstructor</span><span class="p">;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">java.time.LocalDateTime</span><span class="p">;</span>
+
+<span class="nd">@Data</span><span class="w"> </span><span class="c1">//自动生成 get 和 set 方法</span>
+<span class="nd">@NoArgsConstructor</span><span class="w"> </span><span class="c1">//无参构造</span>
+<span class="nd">@AllArgsConstructor</span><span class="w"> </span><span class="c1">//有参构造</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">User</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">Integer</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">LocalDateTime</span><span class="w"> </span><span class="n">updateTime</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>封装好后，合成一个List集合进行返回。</p>
+<p>所以<code>Controller</code>层这么写：</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@RestController</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserServiceImpl</span><span class="p">();</span>
+
+<span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/list&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">list</span><span class="p">(){</span>
+<span class="w">        </span><span class="c1">//1.调用Service</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">userList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">//2.响应数据</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userList</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p><code>Service</code>层中的<code>UserSerivce</code>接口：</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserService</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="c1">//返回将数据转换成 User 类的数组</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findAll</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>Service</code>层中的<code>UserServiceImpl</code>实现类：</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserServiceImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserDao</span><span class="w"> </span><span class="n">userDao</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">UserDaoImpl</span><span class="p">();</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findAll</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">userList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lines</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">map</span><span class="p">(</span><span class="n">line</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">parts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">);</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">Integer</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span><span class="p">);</span>
+<span class="w">            </span><span class="n">LocalDateTime</span><span class="w"> </span><span class="n">updateTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LocalDateTime</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">DateTimeFormatter</span><span class="p">.</span><span class="na">ofPattern</span><span class="p">(</span><span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">));</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">,</span><span class="w"> </span><span class="n">updateTime</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userList</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><code>Dao</code>层中的<code>UserDao</code>接口：</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">UserDao</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findAll</span><span class="p">();</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p><code>Dao</code>层中的<code>UserDaoImpl</code>实现类：</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserDaoImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">UserDao</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findAll</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">InputStream</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getClassLoader</span><span class="p">().</span><span class="na">getResourceAsStream</span><span class="p">(</span><span class="s">&quot;user.txt&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IoUtil</span><span class="p">.</span><span class="na">readLines</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">StandardCharsets</span><span class="p">.</span><span class="na">UTF_8</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">lines</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>我们发现 每一层调用其它层的实现类时需要去构建这个实现类对象，比如在<code>Controller</code>层中new了<code>UserServiceImpl()</code></p>
+<p>如果说我们需要更换实现类，比如由于业务的变更，UserServiceImpl 不能满足现有的业务需求，我们需要切换为 UserServiceImpl2 这套实现，就需要修改Contorller的代码，需要创建 UserServiceImpl2 的实现<code>new UserServiceImpl2()</code> 。</p>
+<p>Service中调用Dao，也是类似的问题。</p>
+<p>这种情况称之为层与层之间 <strong>耦合</strong> 了。</p>
+<p>耦合和内聚的概念：</p>
+<ul>
+<li><strong>内聚：</strong>软件中各个功能模块内部的功能联系。</li>
+<li><strong>耦合：</strong>衡量软件中各个层/模块之间的依赖、关联的程度。</li>
+</ul>
+<p><strong>软件设计原则：高内聚低耦合。</strong></p>
+<blockquote>
+<p><strong>高内聚</strong>：指的是一个模块中各个元素之间的联系的紧密程度，如果各个元素(语句、程序段)之间的联系程度越高，则内聚性越高，即 "高内聚"。</p>
+<p><strong>低耦合：</strong>指的是软件中各个层、模块之间的依赖关联程序越低越好。</p>
+</blockquote>
+<h2 id="_5">优化</h2>
+<p>我们要对现在这种情况进行<strong>解耦</strong>。</p>
+<p>我们不再new一个实现类对象，取而代之的是</p>
+<ul>
+<li>提供一个容器，容器中存储一些对象(例：UserService对象)</li>
+<li>Controller程序从容器中获取UserService类型的对象</li>
+</ul>
+<h3 id="_6">核心概念</h3>
+<p>需要用到<strong>SpringBoot</strong>中的两个<strong>核心概念</strong>：</p>
+<ul>
+<li><strong>控制反转</strong>： Inversion Of Control，简称<strong>IOC</strong>。对象的创建控制权由程序自身转移到外部（容器），这种思想称为控制反转。</li>
+<li>对象的创建权由程序员主动创建转移到容器(由容器创建、管理对象)。这个容器称为：IOC容器或Spring容器。</li>
+<li><strong>依赖注入</strong>：= Dependency Injection，简称<strong>DI</strong>。容器为应用程序提供运行时，所依赖的资源，称之为依赖注入。</li>
+<li>程序运行时需要某个资源，此时容器就为其提供这个资源。</li>
+<li>
+<p>例：EmpController程序运行时需要EmpService对象，Spring容器就为其提供并注入EmpService对象。</p>
+</li>
+<li>
+<p><strong>bean对象：</strong>IOC容器中创建、管理的对象，称之为：bean对象。</p>
+</li>
+</ul>
+<h1 id="ioc-di">IOC &amp;&amp; DI</h1>
+<h2 id="_7">初步演示</h2>
+<p><strong>1). 将Service及Dao层的实现类，交给IOC容器管理</strong></p>
+<p>在实现类加上 <code>@Component</code> 注解，就代表把当前类产生的对象交给IOC容器管理。</p>
+<p><div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserDaoImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">UserDao</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findAll</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">InputStream</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getClassLoader</span><span class="p">().</span><span class="na">getResourceAsStream</span><span class="p">(</span><span class="s">&quot;user.txt&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IoUtil</span><span class="p">.</span><span class="na">readLines</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">StandardCharsets</span><span class="p">.</span><span class="na">UTF_8</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">lines</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<br></p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserServiceImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserDao</span><span class="w"> </span><span class="n">userDao</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findAll</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">userList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lines</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">map</span><span class="p">(</span><span class="n">line</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">parts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">);</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">Integer</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span><span class="p">);</span>
+<span class="w">            </span><span class="n">LocalDateTime</span><span class="w"> </span><span class="n">updateTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LocalDateTime</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">DateTimeFormatter</span><span class="p">.</span><span class="na">ofPattern</span><span class="p">(</span><span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">));</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">,</span><span class="w"> </span><span class="n">updateTime</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userList</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>2). 为Controller 及 Service注入运行时所依赖的对象</strong></p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@Component</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserServiceImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserDao</span><span class="w"> </span><span class="n">userDao</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findAll</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">userList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lines</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">map</span><span class="p">(</span><span class="n">line</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">parts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">);</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">Integer</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span><span class="p">);</span>
+<span class="w">            </span><span class="n">LocalDateTime</span><span class="w"> </span><span class="n">updateTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LocalDateTime</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">DateTimeFormatter</span><span class="p">.</span><span class="na">ofPattern</span><span class="p">(</span><span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">));</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">,</span><span class="w"> </span><span class="n">updateTime</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userList</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@RestController</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nd">@RequestMapping</span><span class="p">(</span><span class="s">&quot;/list&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">list</span><span class="p">(){</span>
+<span class="w">        </span><span class="c1">//1.调用Service</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">userList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">//2.响应数据</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userList</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p>这只是初步对IOC和DI进行了演示，下面进行详细介绍：</p>
+<h2 id="ioc">IOC详解</h2>
+<p>前面我们提到IOC控制反转，就是将对象的控制权交给Spring的IOC容器，由IOC容器创建及管理对象。IOC容器创建的对象称为bean对象。</p>
+<p>Spring框架提供了四种不同的@Component的衍生注解：</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>说明</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>@Component</td>
+<td>声明bean的基础注解</td>
+<td>不属于以下三类时，用此注解</td>
+</tr>
+<tr>
+<td>@Controller</td>
+<td>@Component的衍生注解</td>
+<td>标注在控制层类上</td>
+</tr>
+<tr>
+<td>@Service</td>
+<td>@Component的衍生注解</td>
+<td>标注在业务层类上</td>
+</tr>
+<tr>
+<td>@Repository</td>
+<td>@Component的衍生注解</td>
+<td>标注在数据访问层类上（由于与mybatis整合，用的少）</td>
+</tr>
+</tbody>
+</table>
+<p>那么此时，我们就可以使用 <code>@Service</code> 注解声明Service层的bean。 使用 <code>@Repository</code> 注解声明Dao层的bean。 代码实现如下：</p>
+<p>Service层:</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@Service</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserServiceImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserDao</span><span class="w"> </span><span class="n">userDao</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findAll</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userDao</span><span class="p">.</span><span class="na">findAll</span><span class="p">();</span>
+<span class="w">        </span><span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span><span class="w"> </span><span class="n">userList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lines</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">map</span><span class="p">(</span><span class="n">line</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">parts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="na">split</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="n">Integer</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">);</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parts</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span><span class="p">;</span>
+<span class="w">            </span><span class="n">Integer</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Integer</span><span class="p">.</span><span class="na">parseInt</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span><span class="p">);</span>
+<span class="w">            </span><span class="n">LocalDateTime</span><span class="w"> </span><span class="n">updateTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LocalDateTime</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="n">parts</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">DateTimeFormatter</span><span class="p">.</span><span class="na">ofPattern</span><span class="p">(</span><span class="s">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="p">));</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">User</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">age</span><span class="p">,</span><span class="w"> </span><span class="n">updateTime</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">userList</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Dao层:</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@Repository</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserDaoImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">UserDao</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nd">@Override</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="nf">findAll</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">InputStream</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">getClass</span><span class="p">().</span><span class="na">getClassLoader</span><span class="p">().</span><span class="na">getResourceAsStream</span><span class="p">(</span><span class="s">&quot;user.txt&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IoUtil</span><span class="p">.</span><span class="na">readLines</span><span class="p">(</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">StandardCharsets</span><span class="p">.</span><span class="na">UTF_8</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">());</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">lines</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="_8">注意事项</h3>
+<p><strong>注意1</strong>：声明bean的时候，可以通过注解的value属性指定bean的名字，如果没有指定，默认为类名首字母小写。</p>
+<p><strong>注意2</strong>：使用以上四个注解都可以声明bean，但是在springboot集成web开发中，声明控制器bean只能用@Controller。</p>
+<h3 id="_9">组件扫描</h3>
+<ul>
+<li>前面声明bean的四大注解，要想生效，还需要被组件扫描注解 <code>@ComponentScan</code> 扫描。</li>
+<li>该注解虽然没有显式配置，但是实际上已经包含在了启动类声明注解 <code>@SpringBootApplication</code> 中，默认扫描的范围是启动类所在包及其子包。</li>
+</ul>
+<p>所以，我们在项目开发中，只需要按照如上项目结构，将项目中的所有的业务类，都放在启动类所在包的子包中，就无需考虑组件扫描问题。</p>
+<h2 id="di">DI详解</h2>
+<p>依赖注入，是指IOC容器要为应用程序去提供运行时所依赖的资源，而资源指的就是对象。</p>
+<p>在入门程序案例中，我们使用了@Autowired这个注解，完成了依赖注入的操作，而这个Autowired翻译过来叫：自动装配。</p>
+<p><code>@Autowired</code>注解，默认是按照<strong>类型</strong>进行自动装配的（去IOC容器中找某个类型的对象，然后完成注入操作）</p>
+<h3 id="autowired">@Autowired三种用法</h3>
+<p>1). 属性注入</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@RestController</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">//方式一: 属性注入</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
+
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>优点：代码简洁、方便快速开发。</li>
+<li>缺点：隐藏了类之间的依赖关系、可能会破坏类的封装性。</li>
+</ul>
+<p>2). 构造函数注入</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@RestController</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">//方式二: 构造器注入</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nd">@Autowired</span><span class="w"> </span><span class="c1">//如果当前类中只存在一个构造函数, @Autowired可以省略</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">UserController</span><span class="p">(</span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">userService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w"> </span><span class="p">}</span><span class="w">   </span>
+</code></pre></div>
+<ul>
+<li>优点：能清晰地看到类的依赖关系、提高了代码的安全性。</li>
+<li>缺点：代码繁琐、如果构造参数过多，可能会导致构造函数臃肿。</li>
+<li><strong>注意：如果只有一个构造函数，@Autowired注解可以省略。（通常来说，也只有一个构造函数）</strong></li>
+</ul>
+<p>3). setter注入</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="cm">/**</span>
+<span class="cm"> * 用户信息Controller</span>
+<span class="cm"> */</span>
+<span class="nd">@RestController</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="c1">//方式三: setter注入</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
+
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">setUserService</span><span class="p">(</span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">userService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="p">}</span><span class="w">    </span>
+</code></pre></div>
+<ul>
+<li>优点：保持了类的封装性，依赖关系更清晰。</li>
+<li>缺点：需要额外编写setter方法，增加了代码量。</li>
+</ul>
+<p>在项目开发中，基于@Autowired进行依赖注入时，基本都是第一种和第二种方式。（官方推荐第二种方式，因为会更加规范）但是在企业项目开发中，很多的项目中，也会选择第一种方式因为更加简洁、高效（在规范性方面进行了妥协）。</p>
+<h2 id="iocbean">IOC容器中存在多个同类型bean对象的情况</h2>
+<p>那如果在IOC容器中，存在多个相同类型的bean对象，会出现什么情况呢？</p>
+<p>比如对于Service层中的UserService有两个实现类UserServiceImpl和UserServiceImpl2</p>
+<p>那就会报错，因为在Spring的容器中，UserService这个类型的bean存在两个，框架不知道具体要注入哪个bean使用，所以就报错了。</p>
+<p>Spring提供了以下几种解决方案：</p>
+<ul>
+<li>@Primary</li>
+<li>@Qualifier</li>
+<li>@Resource</li>
+</ul>
+<p><strong>方案一：使用@Primary注解</strong></p>
+<p>当存在多个相同类型的Bean注入时，加上@Primary注解，来确定默认的实现。</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@Primary</span>
+<span class="nd">@Service</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserServiceImpl</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>方案二：使用@Qualifier注解</strong></p>
+<p>指定当前要注入的bean对象。 在@Qualifier的value属性中，指定注入的bean的名称。 @Qualifier注解不能单独使用，必须配合@Autowired使用。</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@RestController</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;userServiceImpl&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="nd">@Autowired</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
+</code></pre></div>
+<p><strong>方案三：使用@Resource注解</strong></p>
+<p>是按照bean的名称进行注入。通过name属性指定要注入的bean的名称。</p>
+<div class="code-block"><span class="filename">Java</span><pre><span></span><code><span class="nd">@RestController</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">UserController</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">    </span><span class="nd">@Resource</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;userServiceImpl&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">UserService</span><span class="w"> </span><span class="n">userService</span><span class="p">;</span>
+</code></pre></div>
+<p>面试题：@Autowird 与 @Resource的区别</p>
+<ul>
+<li>@Autowired 是spring框架提供的注解，而@Resource是JDK提供的注解</li>
+<li>@Autowired 默认是按照类型注入，而@Resource是按照名称注入</li>
+</ul>
+<p><em>注：@Qualifier和@Resource中填写的名称是bean的名称 当在创建bean对象的时候若没有指定名字，则默认名为该bean的类名，类名首字母小写</em></p>
+<p><em>如：UserServiceImpl的bean名称为userServiceImpl</em></p>
+<p>*关于bean名称相关请看<a href="#注意事项">注1</a></p>
+<a class="back-link" href="/">← Home</a>
+<hr class="post-footer-sep">
+<footer class="post-footer">
+<p>© 2025 - 2026 By <a href="https://duckee.top">DuckLing</a></p>
+</footer>
+</article>
+</body>
+</html>
