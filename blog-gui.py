@@ -5,16 +5,19 @@ DuckLing's Blog — GUI 管理工具
   2. 修改配置    — 追加到 articles.js
   3. 本地预览    — 启动/停止 HTTP 服务
   4. 发布上线    — git add / commit / push
+  5. 删除文章    — 删除 HTML + 图片 + 配置条目
 """
 
 import http.server
 import os
+import re
 import sys
 import threading
 import webbrowser
 from datetime import date, datetime
 from pathlib import Path
 from tkinter import filedialog, messagebox
+from typing import Optional
 
 # ── Paths (resolve from exe or script location) ─────────────────
 if getattr(sys, "frozen", False):
@@ -32,6 +35,7 @@ from blog_core import (
     step2_update_config,
     step3_create_server,
     step4_publish,
+    step5_delete_article,
     build_commit_message,
 )
 
@@ -60,13 +64,14 @@ class App:
         self._tk = tk
         self.root = tk.Tk()
         self.root.title("DuckLing's Blog Manager")
-        self.root.geometry("540x520")
+        self.root.geometry("540x580")
         self.root.configure(bg=BG)
         self.root.resizable(False, False)
 
         # State
-        self._last_md: Path | None = None
-        self._last_output: Path | None = None
+        self._last_md: Optional[Path] = None
+        self._last_output: Optional[Path] = None
+        self._last_date: str = date.today().isoformat()
         self._server = None
         self._daily_count = 0
         self._today = date.today()
@@ -92,6 +97,7 @@ class App:
         self._mk_btn(btn_frame, "2. 修改配置",   self._do_update_config)
         self._mk_btn(btn_frame, "3. 本地预览",   self._do_preview)
         self._mk_btn(btn_frame, "4. 发布上线",   self._do_publish)
+        self._mk_btn(btn_frame, "5. 删除文章",   self._do_delete)
 
         tk.Label(
             self.root, text="输出日志", font=("Segoe UI", 10), fg="#555", bg=BG,
@@ -136,14 +142,21 @@ class App:
 
         md_path = Path(md_path)
         title = _extract_title(md_path)
-        self._log(f"生成: {md_path.name}  →  post/{md_path.stem}.html")
 
-        ok, msg = step1_generate(md_path, POST_DIR, MD2HTML_DIR, CONFIG_PATH)
+        # Ask for publish date (default today)
+        article_date = self._ask_date()
+        if article_date is None:
+            return  # user cancelled
+
+        self._log(f"生成: {md_path.name}  →  post/{md_path.stem}.html  (日期: {article_date})")
+
+        ok, msg = step1_generate(md_path, POST_DIR, MD2HTML_DIR, CONFIG_PATH, article_date)
         self._log(msg)
 
         if ok:
             self._last_md = md_path
             self._last_output = POST_DIR / f"{md_path.stem}.html"
+            self._last_date = article_date
             # Daily counter
             today = date.today()
             if today != self._today:
@@ -154,6 +167,66 @@ class App:
         else:
             self._last_md = None
             self._last_output = None
+
+    def _ask_date(self) -> Optional[str]:
+        """Show a dialog asking for the article publish date. Returns YYYY-MM-DD or None."""
+        tk = self._tk
+        dlg = tk.Toplevel(self.root)
+        dlg.title("文章发布时间")
+        dlg.geometry("320x130")
+        dlg.configure(bg=BG)
+        dlg.resizable(False, False)
+        dlg.transient(self.root)
+        dlg.grab_set()
+
+        tk.Label(
+            dlg, text="发布时间 (YYYY-MM-DD)",
+            font=("Segoe UI", 11), fg=FG, bg=BG,
+        ).pack(pady=(16, 6))
+
+        entry = tk.Entry(
+            dlg, font=("Consolas", 12), bg=LOG_BG, fg=FG,
+            insertbackground=FG, bd=0, relief="flat",
+            highlightthickness=1, highlightbackground="#333",
+            justify="center",
+        )
+        entry.insert(0, self._last_date)
+        entry.pack(fill="x", padx=30, ipady=4)
+        entry.select_range(0, "end")
+        entry.focus()
+
+        result = [None]  # mutable container for closure
+
+        def _ok():
+            val = entry.get().strip()
+            if re.match(r"^\d{4}-\d{2}-\d{2}$", val):
+                result[0] = val
+                dlg.destroy()
+            else:
+                messagebox.showwarning("格式错误", "请输入 YYYY-MM-DD 格式的日期")
+
+        def _cancel():
+            dlg.destroy()
+
+        btn_frame = tk.Frame(dlg, bg=BG)
+        btn_frame.pack(pady=12)
+        tk.Button(
+            btn_frame, text="确定", font=("Segoe UI", 10),
+            fg=BTN_FG, bg=ACCENT, bd=0, padx=20, pady=4,
+            activeforeground="#fff", activebackground="#4a8be5",
+            command=_ok,
+        ).pack(side="left", padx=6)
+        tk.Button(
+            btn_frame, text="取消", font=("Segoe UI", 10),
+            fg=BTN_FG, bg=BTN_BG, bd=0, padx=20, pady=4,
+            activeforeground="#fff", activebackground="#2a2a2a",
+            command=_cancel,
+        ).pack(side="left", padx=6)
+
+        dlg.bind("<Return>", lambda e: _ok())
+        dlg.bind("<Escape>", lambda e: _cancel())
+        self.root.wait_window(dlg)
+        return result[0]
 
     # ── 2. Update config ───────────────────────────────────────
     def _do_update_config(self):
@@ -173,7 +246,7 @@ class App:
             output_path = self._last_output
 
         self._log(f"修改配置: {md_path.stem}")
-        ok, msg = step2_update_config(md_path, output_path, ARTICLES_JS)
+        ok, msg = step2_update_config(md_path, output_path, ARTICLES_JS, self._last_date)
         self._log(msg)
 
     # ── 3. Preview ─────────────────────────────────────────────
@@ -208,7 +281,10 @@ class App:
         if self._server is None:
             return
         try:
-            self._server.shutdown()
+            # shutdown() blocks waiting for serve_forever, which freezes tkinter.
+            # Instead, signal shutdown and close the socket to wake select().
+            self._server._BaseServer__shutdown_request = True
+            self._server.socket.close()
         except Exception:
             pass
         self._server = None
@@ -261,6 +337,26 @@ class App:
         self._log(f"git push: {msg}")
         ok, output = step4_publish(ROOT, msg)
         self._log(output)
+
+    # ── 5. Delete article ───────────────────────────────────────
+    def _do_delete(self):
+        html_path = filedialog.askopenfilename(
+            title="选择要删除的文章 HTML",
+            filetypes=[("HTML", "*.html")],
+            initialdir=POST_DIR,
+        )
+        if not html_path:
+            return
+
+        html_path = Path(html_path)
+        article_id = html_path.stem
+
+        if not messagebox.askyesno("确认删除", f"确定删除文章「{article_id}」？\n\n将删除:\n  post/{article_id}.html\n  post/{article_id}/ (图片文件夹)\n  articles.js 中对应条目"):
+            return
+
+        self._log(f"删除文章: {article_id}")
+        ok, msg = step5_delete_article(article_id, POST_DIR, ARTICLES_JS)
+        self._log(msg)
 
 
 if __name__ == "__main__":

@@ -20,8 +20,8 @@ const articles = [
     date: '2026-04-28'
   },
   {
-    id: 'test',
-    title: '测试',
-    date: '2026-05-04'
+    id: 'test_sample',
+    title: 'Hello, Blog',
+    date: '2026-03-04'
   }
 ]

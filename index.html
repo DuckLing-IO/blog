@@ -42,9 +42,9 @@
     const app = createApp({
       setup() {
         const grouped = computed(() => {
-          const reversed = [...articles].reverse()
+          const sorted = [...articles].sort((a, b) => b.date.localeCompare(a.date))
           const groups = []
-          for (const a of reversed) {
+          for (const a of sorted) {
             const last = groups[groups.length - 1]
             if (last && last.date === a.date) {
               last.articles.push(a)

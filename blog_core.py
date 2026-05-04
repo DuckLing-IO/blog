@@ -12,6 +12,7 @@ import subprocess
 import sys
 from datetime import date, datetime
 from pathlib import Path
+from typing import Optional
 
 
 # ── Step 1: Generate HTML from Markdown ──────────────────────────
@@ -20,8 +21,13 @@ def step1_generate(
     post_dir: Path,
     md2html_dir: Path,
     config_path: Path,
+    article_date: Optional[str] = None,
 ) -> tuple:
-    """Convert .md → post/{name}.html and copy images to post/{name}/."""
+    """Convert .md → post/{name}.html and copy images to post/{name}/.
+
+    If article_date is given (YYYY-MM-DD), it replaces the auto-generated
+    timestamp in the HTML so the post-date matches the user's intent.
+    """
     if not md_path.exists():
         return False, f"文件不存在: {md_path}"
 
@@ -38,6 +44,15 @@ def step1_generate(
         body_html = m2h.convert_md_to_html(md_text, config)
         full_html = m2h.build_html_page(body_html, config)
         full_html = m2h._resolve_images(full_html, md_path, output_path)
+
+        # Replace auto-generated datetime with user-specified date
+        if article_date:
+            full_html = re.sub(
+                r'<time class="post-date" datetime="[^"]*">[^<]*</time>',
+                f'<time class="post-date" datetime="{article_date}">{article_date}</time>',
+                full_html,
+            )
+
         output_path.write_text(full_html, encoding="utf-8")
 
         return True, f"OK  {md_path.name}  →  post/{article_id}.html"
@@ -50,6 +65,7 @@ def step2_update_config(
     md_path: Path,
     output_path: Path,
     articles_js_path: Path,
+    article_date: Optional[str] = None,
 ) -> tuple:
     """Append article metadata to articles.js."""
     if not md_path.exists():
@@ -65,7 +81,7 @@ def step2_update_config(
     title = m.group(1).strip() if m else md_path.stem
 
     article_id = output_path.stem
-    today_str = date.today().isoformat()
+    date_str = article_date or date.today().isoformat()
 
     # Read or create articles.js
     if articles_js_path.exists():
@@ -87,7 +103,7 @@ def step2_update_config(
 
     new_content = re.sub(
         r"\n\]",
-        f",\n  {{\n    id: '{article_id}',\n    title: '{safe_title}',\n    date: '{today_str}'\n  }}\n]",
+        f",\n  {{\n    id: '{article_id}',\n    title: '{safe_title}',\n    date: '{date_str}'\n  }}\n]",
         content,
         count=1,
     )
@@ -137,14 +153,9 @@ def step3_create_server(root_dir: Path, port: int = 8080):
 # ── Step 4: Git publish ──────────────────────────────────────────
 def step4_publish(root_dir: Path, commit_msg: str) -> tuple:
     """Run git add -A, git commit, git push. Returns (ok, message)."""
-    steps = [
-        (["git", "add", "-A"], "git add"),
-        (["git", "commit", "-m", commit_msg], "git commit"),
-        (["git", "push"], "git push"),
-    ]
-
     lines = []
-    for cmd, label in steps:
+
+    def _run(cmd, label):
         try:
             r = subprocess.run(
                 cmd, capture_output=True, text=True,
@@ -152,11 +163,10 @@ def step4_publish(root_dir: Path, commit_msg: str) -> tuple:
             )
         except subprocess.TimeoutExpired:
             lines.append(f"✗ {label} 超时（60s）")
-            return False, "\n".join(lines)
+            return None
         except Exception as e:
             lines.append(f"✗ {label} 异常: {e}")
-            return False, "\n".join(lines)
-
+            return None
         out = r.stdout.strip()
         err = r.stderr.strip()
         if out:
@@ -165,10 +175,80 @@ def step4_publish(root_dir: Path, commit_msg: str) -> tuple:
             lines.append(err)
         if r.returncode != 0:
             lines.append(f"✗ {label} 失败 (exit {r.returncode})")
-            return False, "\n".join(lines)
+            return None
+        return r
+
+    # git add
+    if _run(["git", "add", "-A"], "git add") is None:
+        return False, "\n".join(lines)
+
+    # git commit
+    if _run(["git", "commit", "-m", commit_msg], "git commit") is None:
+        return False, "\n".join(lines)
+
+    # Determine push command (check upstream silently)
+    r_upstream = subprocess.run(
+        ["git", "rev-parse", "--abbrev-ref", "@{upstream}"],
+        capture_output=True, text=True,
+        cwd=str(root_dir), timeout=10,
+    )
+    if r_upstream.returncode == 0:
+        push_cmd = ["git", "push"]
+    else:
+        r_branch = subprocess.run(
+            ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+            capture_output=True, text=True,
+            cwd=str(root_dir), timeout=10,
+        )
+        branch = r_branch.stdout.strip()
+        lines.append(f"分支 '{branch}' 无上游，自动设置 origin/{branch}")
+        push_cmd = ["git", "push", "-u", "origin", branch]
+
+    if _run(push_cmd, "git push") is None:
+        return False, "\n".join(lines)
 
     lines.append("✓ 推送成功")
     return True, "\n".join(lines)
+
+
+# ── Step 5: Delete article ────────────────────────────────────────
+def step5_delete_article(
+    article_id: str,
+    post_dir: Path,
+    articles_js_path: Path,
+) -> tuple:
+    """Delete HTML file, image folder, and articles.js entry for an article."""
+    html_path = post_dir / f"{article_id}.html"
+    img_dir = post_dir / article_id
+
+    deleted = []
+
+    # Delete HTML file
+    if html_path.exists():
+        html_path.unlink()
+        deleted.append(f"post/{article_id}.html")
+    else:
+        return False, f"文件不存在: post/{article_id}.html"
+
+    # Delete image folder
+    if img_dir.is_dir():
+        shutil.rmtree(img_dir)
+        deleted.append(f"post/{article_id}/")
+
+    # Remove from articles.js
+    if articles_js_path.exists():
+        content = articles_js_path.read_text(encoding="utf-8")
+        # Remove the entry block: { id: 'xxx', title: '...', date: '...' }
+        pattern = re.compile(
+            r",?\s*\{\s*\n?\s*id:\s*['\"]" + re.escape(article_id) + r"['\"].*?\n\s*\}",
+            re.DOTALL,
+        )
+        new_content = pattern.sub("", content, count=1)
+        if new_content != content:
+            articles_js_path.write_text(new_content, encoding="utf-8")
+            deleted.append("articles.js 条目")
+
+    return True, f"已删除: {', '.join(deleted)}"
 
 
 # ── Commit message helper ────────────────────────────────────────
