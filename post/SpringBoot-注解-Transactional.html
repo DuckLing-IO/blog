@@ -362,74 +362,88 @@ body {
   <a class="header-title" href="/">DuckLing's Blog</a>
 </header>
 <article class="blog-post">
-<h1 id="hello-blog">Hello, Blog</h1>
-<time class="post-date" datetime="2026-04-04">2026-04-04</time>
-<p>这是一篇<strong>测试文章</strong>，用来验证 Markdown → HTML 转换器的工作情况。</p>
-<h2 id="_1">图片测试</h2>
-<p>下面是一张示例图片：</p>
-<p><img alt="示例图片" src="https://picsum.photos/800/400" /></p>
-<h2 id="_2">代码高亮测试</h2>
-<p>Python 代码块：</p>
-<div class="code-block"><span class="filename">Python</span><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fibonacci</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate the first n Fibonacci numbers.&quot;&quot;&quot;</span>
-    <span class="n">seq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
-        <span class="n">seq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">seq</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">seq</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">seq</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span>
-
-<span class="c1"># 前 10 个斐波那契数</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fibonacci</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<h1 id="springboottransactional">[SpringBoot]注解@Transactional</h1>
+<time class="post-date" datetime="2026-01-27 14:19">2026-01-27 14:19</time>
+<h2 id="_1">一、 工作原理</h2>
+<p><code>@Transactional</code> 的本质是基于 <strong>Spring AOP</strong> 实现的。当 Spring 容器启动时，它会扫描标注了该注解的类或方法，并为这些 Bean 生成一个 <strong>代理对象（Proxy）</strong>。</p>
+<h3 id="_2">执行流程</h3>
+<p>当调用方请求一个被 <code>@Transactional</code> 修饰的方法时，实际上是在调用代理对象。执行顺序如下：</p>
+<ol>
+<li><strong>拦截请求</strong>：代理对象拦截对目标方法的调用。</li>
+<li><strong>开启事务</strong>：代理对象向事务管理器（Transaction Manager）申请，通过数据库连接设置 <code>conn.setAutoCommit(false)</code>。</li>
+<li><strong>执行业务</strong>：执行目标类中的实际业务方法。</li>
+<li><strong>结果处理</strong>：</li>
+<li><strong>Commit</strong>：如果方法正常返回，代理对象执行事务提交。</li>
+<li><strong>Rollback</strong>：如果方法抛出特定异常，代理对象执行事务回滚。</li>
+<li><strong>资源清理</strong>：关闭数据库连接或将其归还连接池。</li>
+</ol>
+<blockquote>
+<p><strong>核心提示</strong>：理解“代理对象”是理解事务机制的关键。如果调用没有经过代理对象，事务逻辑就不会执行。</p>
+</blockquote>
+<h2 id="_3">二、 核心属性详解</h2>
+<p>虽然 <code>@Transactional</code> 开箱即用，但在生产环境中，我们必须关注以下两个关键参数以确保数据一致性。</p>
+<h3 id="1-rollbackfor">1. rollbackFor（回滚规则）</h3>
+<p>这是最容易被忽视的属性。</p>
+<ul>
+<li><strong>默认行为</strong>：Spring 默认仅在抛出 <code>RuntimeException</code>（运行时异常）或 <code>Error</code> 时回滚。对于 <code>Checked Exception</code>（受检异常，如 <code>IOException</code>、<code>SQLException</code>），<strong>默认不回滚</strong>。</li>
+<li><strong>最佳实践</strong>：务必显式指定回滚异常类型，确保所有异常均能触发回滚。</li>
+</ul>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>// 推荐写法：覆盖所有异常情况
+@Transactional(rollbackFor = Exception.class)
+public void createUser() throws Exception {
+    // 业务逻辑
+}
 </code></pre></div>
-<p>JavaScript 代码：</p>
-<div class="code-block"><span class="filename">JavaScript</span><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">greeting</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Hello, </span><span class="si">${</span><span class="nx">name</span><span class="si">}</span><span class="sb">!`</span><span class="p">);</span>
-<span class="p">};</span>
-
-<span class="nx">greeting</span><span class="p">(</span><span class="s2">&quot;World&quot;</span><span class="p">);</span>
-</code></pre></div>
-<p>一段行内代码 <code>const x = 42</code> 看起来应该和正文不一样。</p>
-<h2 id="_3">表格</h2>
+<h3 id="2-propagation">2. propagation（传播行为）</h3>
+<p>该属性定义了当事务方法被另一个事务方法调用时，事务该如何传播。Spring 共支持 <strong>7 种</strong> 传播行为：</p>
 <table>
 <thead>
 <tr>
-<th>特性</th>
-<th>状态</th>
-<th>备注</th>
+<th>属性值</th>
+<th>行为描述</th>
+<th>适用场景</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>图片渲染</td>
-<td>✅</td>
-<td>支持远程 URL</td>
+<td><strong>REQUIRED</strong> (默认)</td>
+<td>如果当前存在事务，则加入该事务；如果当前无事务，则新建一个事务。</td>
+<td>绝大多数增删改业务场景</td>
 </tr>
 <tr>
-<td>代码高亮</td>
-<td>✅</td>
-<td>Pygments + monokai</td>
+<td><strong>REQUIRES_NEW</strong></td>
+<td>无论当前是否存在事务，都挂起当前事务，开启一个<strong>独立</strong>的新事务。</td>
+<td>记录日志、审计流水（即使主业务失败，日志也必须入库）</td>
 </tr>
 <tr>
-<td>中文字体</td>
-<td>✅</td>
-<td>Noto Sans/Serif SC 回退</td>
+<td><strong>NESTED</strong></td>
+<td>如果当前存在事务，则在嵌套事务内执行（基于 JDBC SavePoint）；如果无事务，行为同 REQUIRED。</td>
+<td>复杂的子模块回滚需求（主事务回滚会回滚子事务，但子事务回滚不影响主事务）</td>
+</tr>
+<tr>
+<td><strong>SUPPORTS</strong></td>
+<td>如果当前存在事务，则加入该事务；如果当前没有事务，则以<strong>非事务</strong>方式执行。</td>
+<td>纯查询操作（适合“能有最好，没有也行”的场景）</td>
+</tr>
+<tr>
+<td><strong>NOT_SUPPORTED</strong></td>
+<td>以<strong>非事务</strong>方式执行操作，如果当前存在事务，就把当前事务挂起。</td>
+<td>发送邮件、短信等不涉及数据库的耗时操作，避免占用数据库连接</td>
+</tr>
+<tr>
+<td><strong>MANDATORY</strong></td>
+<td>如果当前存在事务，则加入该事务；如果当前没有事务，则<strong>抛出异常</strong>。</td>
+<td>必须在已有事务上下文中执行的方法</td>
+</tr>
+<tr>
+<td><strong>NEVER</strong></td>
+<td>以<strong>非事务</strong>方式执行，如果当前存在事务，则<strong>抛出异常</strong>。</td>
+<td>严禁在事务中执行的操作</td>
 </tr>
 </tbody>
 </table>
-<h2 id="_4">引用</h2>
-<blockquote>
-<p>好的代码本身就是最好的文档。
-—— <em>Steve McConnell</em></p>
-</blockquote>
-<h2 id="_5">列表</h2>
-<ul>
-<li>第一项</li>
-<li>第二项</li>
-<li>嵌套项 A</li>
-<li>嵌套项 B</li>
-<li>第三项</li>
-</ul>
-<hr />
-<p>转换完毕。</p>
+<h2 id="_4">总结</h2>
+<p><code>@Transactional</code> 是一个强大的工具。深入理解其背后的 <strong>AOP 代理机制</strong>，并正确配置 <strong>回滚规则 (rollbackFor)</strong> 和 <strong>传播行为 (propagation)</strong>，是确保后端业务数据一致性的基础。</p>
 <a class="back-link" href="/">← Home</a>
 <hr class="post-footer-sep">
 <footer class="post-footer">

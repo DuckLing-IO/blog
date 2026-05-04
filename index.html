@@ -45,11 +45,12 @@
           const sorted = [...articles].sort((a, b) => b.date.localeCompare(a.date))
           const groups = []
           for (const a of sorted) {
+            const day = a.date.slice(0, 10)
             const last = groups[groups.length - 1]
-            if (last && last.date === a.date) {
+            if (last && last.date === day) {
               last.articles.push(a)
             } else {
-              groups.push({ date: a.date, articles: [a] })
+              groups.push({ date: day, articles: [a] })
             }
           }
           return groups

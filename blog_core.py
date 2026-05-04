@@ -15,18 +15,50 @@ from pathlib import Path
 from typing import Optional
 
 
+# ── Shared article CSS ────────────────────────────────────────────
+def generate_article_css(
+    project_root: Path,
+    md2html_dir: Path,
+    config_path: Path,
+) -> bool:
+    """Generate /article.css from config.yaml.  Returns True on success."""
+    try:
+        sys.path.insert(0, str(md2html_dir))
+        import md2html as m2h
+        from pygments.formatters import HtmlFormatter
+
+        config = m2h.load_config(config_path)
+        css = m2h.generate_css(config["styles"], config["code"])
+        pygments_css = HtmlFormatter(
+            style=config["code"].get("theme", "monokai")
+        ).get_style_defs(".blog-post .code-block")
+
+        out = project_root / "article.css"
+        out.write_text(
+            "/* Shared article styles — generated from config.yaml */\n\n"
+            + css
+            + "\n\n/* === Pygments code highlighting === */\n"
+            + pygments_css
+            + "\n",
+            encoding="utf-8",
+        )
+        return True
+    except Exception:
+        return False
+
+
 # ── Step 1: Generate HTML from Markdown ──────────────────────────
 def step1_generate(
     md_path: Path,
     post_dir: Path,
     md2html_dir: Path,
     config_path: Path,
-    article_date: Optional[str] = None,
+    article_datetime: Optional[str] = None,
 ) -> tuple:
     """Convert .md → post/{name}.html and copy images to post/{name}/.
 
-    If article_date is given (YYYY-MM-DD), it replaces the auto-generated
-    timestamp in the HTML so the post-date matches the user's intent.
+    If article_datetime is given (YYYY-MM-DD HH:MM), it replaces the
+    auto-generated timestamp in the HTML.
     """
     if not md_path.exists():
         return False, f"文件不存在: {md_path}"
@@ -34,6 +66,10 @@ def step1_generate(
     article_id = md_path.stem
     output_path = post_dir / f"{article_id}.html"
     post_dir.mkdir(parents=True, exist_ok=True)
+
+    # Ensure shared article.css is up to date
+    project_root = post_dir.parent
+    generate_article_css(project_root, md2html_dir, config_path)
 
     try:
         sys.path.insert(0, str(md2html_dir))
@@ -45,11 +81,11 @@ def step1_generate(
         full_html = m2h.build_html_page(body_html, config)
         full_html = m2h._resolve_images(full_html, md_path, output_path)
 
-        # Replace auto-generated datetime with user-specified date
-        if article_date:
+        # Replace auto-generated timestamp with user-specified datetime
+        if article_datetime:
             full_html = re.sub(
                 r'<time class="post-date" datetime="[^"]*">[^<]*</time>',
-                f'<time class="post-date" datetime="{article_date}">{article_date}</time>',
+                f'<time class="post-date" datetime="{article_datetime}">{article_datetime}</time>',
                 full_html,
             )
 
@@ -65,7 +101,7 @@ def step2_update_config(
     md_path: Path,
     output_path: Path,
     articles_js_path: Path,
-    article_date: Optional[str] = None,
+    article_datetime: Optional[str] = None,
 ) -> tuple:
     """Append article metadata to articles.js."""
     if not md_path.exists():
@@ -81,7 +117,7 @@ def step2_update_config(
     title = m.group(1).strip() if m else md_path.stem
 
     article_id = output_path.stem
-    date_str = article_date or date.today().isoformat()
+    date_str = article_datetime or datetime.now().strftime("%Y-%m-%d %H:%M")
 
     # Read or create articles.js
     if articles_js_path.exists():

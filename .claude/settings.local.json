@@ -17,7 +17,10 @@
       "Bash(rm -rf post/e2e-test)",
       "Bash(python *)",
       "Bash(pyinstaller blog-gui.spec --noconfirm --clean)",
-      "Bash(taskkill /f /im blog-gui.exe)"
+      "Bash(taskkill /f /im blog-gui.exe)",
+      "Bash(git rm *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }

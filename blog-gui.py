@@ -31,6 +31,7 @@ CONFIG_PATH = MD2HTML_DIR / "config.yaml"
 ARTICLES_JS = ROOT / "articles.js"
 
 from blog_core import (
+    generate_article_css,
     step1_generate,
     step2_update_config,
     step3_create_server,
@@ -70,10 +71,13 @@ class App:
 
         # State
         self._pending: list = []   # [{md, output, date}, ...]
-        self._last_date: str = date.today().isoformat()
+        self._last_date: str = datetime.now().strftime("%Y-%m-%d %H:%M")
         self._server = None
         self._daily_count = 0
         self._today = date.today()
+
+        # Ensure shared article.css exists
+        generate_article_css(ROOT, MD2HTML_DIR, CONFIG_PATH)
 
         self._build_ui()
 
@@ -142,23 +146,26 @@ class App:
         md_path = Path(md_path)
         title = _extract_title(md_path)
 
-        # Ask for publish date (default today)
-        article_date = self._ask_date()
-        if article_date is None:
+        # Default datetime = file modification time
+        mtime = datetime.fromtimestamp(md_path.stat().st_mtime)
+        default_dt = mtime.strftime("%Y-%m-%d %H:%M")
+
+        article_datetime = self._ask_date(default_dt)
+        if article_datetime is None:
             return  # user cancelled
 
-        self._log(f"生成: {md_path.name}  →  post/{md_path.stem}.html  (日期: {article_date})")
+        self._log(f"生成: {md_path.name}  →  post/{md_path.stem}.html  ({article_datetime})")
 
-        ok, msg = step1_generate(md_path, POST_DIR, MD2HTML_DIR, CONFIG_PATH, article_date)
+        ok, msg = step1_generate(md_path, POST_DIR, MD2HTML_DIR, CONFIG_PATH, article_datetime)
         self._log(msg)
 
         if ok:
             self._pending.append({
                 'md': md_path,
                 'output': POST_DIR / f"{md_path.stem}.html",
-                'date': article_date,
+                'date': article_datetime,
             })
-            self._last_date = article_date
+            self._last_date = article_datetime
             # Daily counter
             today = date.today()
             if today != self._today:
@@ -167,19 +174,19 @@ class App:
             self._daily_count += 1
             self._log(f"✓ 文章「{title}」已生成（待写入配置）")
 
-    def _ask_date(self) -> Optional[str]:
-        """Show a dialog asking for the article publish date. Returns YYYY-MM-DD or None."""
+    def _ask_date(self, default: str = "") -> Optional[str]:
+        """Show a dialog asking for the article publish datetime. Returns 'YYYY-MM-DD HH:MM' or None."""
         tk = self._tk
         dlg = tk.Toplevel(self.root)
         dlg.title("文章发布时间")
-        dlg.geometry("320x130")
+        dlg.geometry("360x130")
         dlg.configure(bg=BG)
         dlg.resizable(False, False)
         dlg.transient(self.root)
         dlg.grab_set()
 
         tk.Label(
-            dlg, text="发布时间 (YYYY-MM-DD)",
+            dlg, text="发布时间 (YYYY-MM-DD HH:MM)",
             font=("Segoe UI", 11), fg=FG, bg=BG,
         ).pack(pady=(16, 6))
 
@@ -189,7 +196,7 @@ class App:
             highlightthickness=1, highlightbackground="#333",
             justify="center",
         )
-        entry.insert(0, self._last_date)
+        entry.insert(0, default or self._last_date)
         entry.pack(fill="x", padx=30, ipady=4)
         entry.select_range(0, "end")
         entry.focus()
@@ -198,11 +205,11 @@ class App:
 
         def _ok():
             val = entry.get().strip()
-            if re.match(r"^\d{4}-\d{2}-\d{2}$", val):
+            if re.match(r"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$", val):
                 result[0] = val
                 dlg.destroy()
             else:
-                messagebox.showwarning("格式错误", "请输入 YYYY-MM-DD 格式的日期")
+                messagebox.showwarning("格式错误", "请输入 YYYY-MM-DD HH:MM 格式")
 
         def _cancel():
             dlg.destroy()

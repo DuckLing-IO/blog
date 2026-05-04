@@ -5,28 +5,8 @@
 
 const articles = [
   {
-    id: 'hello-world',
-    title: '你好，世界',
-    date: '2026-04-15'
-  },
-  {
-    id: 'another-post',
-    title: '又一篇',
-    date: '2026-04-28'
-  },
-  {
-    id: 'third-post',
-    title: '同一天的第二篇',
-    date: '2026-04-28'
-  },
-  {
-    id: 'test',
-    title: '测试',
-    date: '2026-04-04'
-  },
-  {
-    id: 'test_sample',
-    title: 'Hello, Blog',
-    date: '2026-04-04'
+    id: 'SpringBoot-注解-Transactional',
+    title: '[SpringBoot]注解@Transactional',
+    date: '2026-01-27 14:19'
   }
 ]
