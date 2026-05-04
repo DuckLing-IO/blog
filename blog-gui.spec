@@ -6,6 +6,7 @@ a = Analysis(
     binaries=[],
     datas=[],
     hiddenimports=[
+        'blog_core',
         'md2html',
         'markdown',
         'yaml',

@@ -15,7 +15,9 @@
       "Bash(mkdir -p post/e2e-test)",
       "Bash(python md2html/md2html.py md2html/test_sample.md -c md2html/config.yaml -o post/e2e-test/index.html)",
       "Bash(rm -rf post/e2e-test)",
-      "Bash(python *)"
+      "Bash(python *)",
+      "Bash(pyinstaller blog-gui.spec --noconfirm --clean)",
+      "Bash(taskkill /f /im blog-gui.exe)"
     ]
   }
 }
