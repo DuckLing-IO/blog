@@ -69,8 +69,7 @@ class App:
         self.root.resizable(False, False)
 
         # State
-        self._last_md: Optional[Path] = None
-        self._last_output: Optional[Path] = None
+        self._pending: list = []   # [{md, output, date}, ...]
         self._last_date: str = date.today().isoformat()
         self._server = None
         self._daily_count = 0
@@ -154,8 +153,11 @@ class App:
         self._log(msg)
 
         if ok:
-            self._last_md = md_path
-            self._last_output = POST_DIR / f"{md_path.stem}.html"
+            self._pending.append({
+                'md': md_path,
+                'output': POST_DIR / f"{md_path.stem}.html",
+                'date': article_date,
+            })
             self._last_date = article_date
             # Daily counter
             today = date.today()
@@ -163,10 +165,7 @@ class App:
                 self._today = today
                 self._daily_count = 0
             self._daily_count += 1
-            self._log(f"✓ 文章「{title}」已生成")
-        else:
-            self._last_md = None
-            self._last_output = None
+            self._log(f"✓ 文章「{title}」已生成（待写入配置）")
 
     def _ask_date(self) -> Optional[str]:
         """Show a dialog asking for the article publish date. Returns YYYY-MM-DD or None."""
@@ -230,7 +229,7 @@ class App:
 
     # ── 2. Update config ───────────────────────────────────────
     def _do_update_config(self):
-        if not self._last_md or not self._last_output:
+        if not self._pending:
             # Fallback: let user select a file
             md_path = filedialog.askopenfilename(
                 title="选择 Markdown 文件",
@@ -241,13 +240,18 @@ class App:
                 return
             md_path = Path(md_path)
             output_path = POST_DIR / f"{md_path.stem}.html"
-        else:
-            md_path = self._last_md
-            output_path = self._last_output
+            self._log(f"修改配置: {md_path.stem}")
+            ok, msg = step2_update_config(md_path, output_path, ARTICLES_JS, self._last_date)
+            self._log(msg)
+            return
 
-        self._log(f"修改配置: {md_path.stem}")
-        ok, msg = step2_update_config(md_path, output_path, ARTICLES_JS, self._last_date)
-        self._log(msg)
+        count = len(self._pending)
+        self._log(f"修改配置: {count} 篇文章待写入…")
+        for entry in self._pending:
+            ok, msg = step2_update_config(entry['md'], entry['output'], ARTICLES_JS, entry['date'])
+            self._log(f"  {entry['md'].stem}: {msg}")
+        self._pending.clear()
+        self._log(f"✓ {count} 篇文章配置已更新")
 
     # ── 3. Preview ─────────────────────────────────────────────
     def _do_preview(self):
