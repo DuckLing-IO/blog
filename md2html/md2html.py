@@ -478,6 +478,20 @@ def build_html_page(body_html: str, config: dict) -> str:
         f"&family={body_font.replace(' ', '+')}:ital,wght@0,400;0,700;1,400"
     )
 
+    # MathJax 3 — render $...$ and $$...$$ as LaTeX math
+    mathjax_block = (
+        '<script>\n'
+        'MathJax = {\n'
+        '  tex: {\n'
+        "    inlineMath: [['$', '$'], ['\\\\(', '\\\\)']],\n"
+        "    displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],\n"
+        '    processEscapes: true\n'
+        '  }\n'
+        '};\n'
+        '</script>\n'
+        '<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>'
+    )
+
     return f"""\
 <!DOCTYPE html>
 <html lang="{lang}">
@@ -492,6 +506,7 @@ def build_html_page(body_html: str, config: dict) -> str:
 <style>
 {pygments_css}
 </style>
+{mathjax_block}
 </head>
 <body>
 {header_html}
