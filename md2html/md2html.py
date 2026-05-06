@@ -201,14 +201,24 @@ body {{
 .blog-post h2 {{ font-size: 1.5em; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.3em; }}
 .blog-post h3 {{ font-size: 1.25em; }}
 
-/* === Post date (below title) === */
-.blog-post .post-date {{
-    display: block;
+/* === Post meta (date + views below title) === */
+.blog-post .post-meta {{
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-family: '{heading_font}', 'Noto Sans SC', sans-serif;
     font-size: 0.875em;
     color: rgba(255,255,255,0.4);
     margin-top: 0.2em;
     margin-bottom: 2.5em;
+}}
+
+.blog-post .post-meta .post-date {{
+    color: inherit;
+}}
+
+.blog-post .post-meta .post-views {{
+    color: inherit;
 }}
 
 /* === Paragraph === */
@@ -376,15 +386,6 @@ body {{
     color: {link};
 }}
 
-/* === View counter === */
-.blog-post .view-counter {{
-   	text-align: center;
-   	font-family: '{heading_font}', 'Noto Sans SC', sans-serif;
-   	font-size: 0.85em;
-   	color: rgba(255,255,255,0.3);
-   	margin-bottom: 0.5em;
-}}
-
 /* === Back link === */
 .blog-post .back-link {{
     display: inline-flex;
@@ -425,7 +426,10 @@ def _inject_timestamp(body_html: str, now: datetime, lang: str) -> str:
     def _replace(m: re.Match) -> str:
         return (
             f'{m.group(0)}\n'
-            f'<time class="post-date" datetime="{iso}">{date_str}</time>'
+            f'<div class="post-meta">\n'
+            f'  <time class="post-date" datetime="{iso}">{date_str}</time>\n'
+            f'  <span class="post-views">· <span id="view-count">...</span> 次浏览</span>\n'
+            f'</div>'
         )
 
     return re.sub(r"<h1[^>]*>.*?</h1>", _replace, body_html, count=1, flags=re.DOTALL)
@@ -453,14 +457,6 @@ def build_html_page(body_html: str, config: dict) -> str:
         f'  <a class="header-title" href="{site_home}">{site_title}</a>\n'
         f'</header>'
     ) if site_title else ""
-
-    # --- View counter ---
-    view_counter_html = (
-        '<hr class="post-footer-sep">\n'
-        '<div class="view-counter">\n'
-        '  <span>👁 </span><span id="view-count">...</span><span> 次阅读</span>\n'
-        '</div>'
-    )
 
     # --- Back link ---
     back_html = f'<a class="back-link" href="{site_home}">← Home</a>'
@@ -529,7 +525,6 @@ def build_html_page(body_html: str, config: dict) -> str:
 {header_html}
 <article class="blog-post">
 {body_html}
-{view_counter_html}
 {back_html}{footer_html}
 </article>
 <script src="/view-counter.js"></script>

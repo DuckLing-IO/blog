@@ -363,7 +363,10 @@ body {
 </header>
 <article class="blog-post">
 <h1 id="springboottransactional">[SpringBoot]注解@Transactional</h1>
-<time class="post-date" datetime="2026-01-27 14:19">2026-01-27 14:19</time>
+<div class="post-meta">
+  <time class="post-date" datetime="2026-01-27 14:19">2026-01-27 14:19</time>
+  <span class="post-views">· <span id="view-count">...</span> 次浏览</span>
+</div>
 <h2 id="_1">一、 工作原理</h2>
 <p><code>@Transactional</code> 的本质是基于 <strong>Spring AOP</strong> 实现的。当 Spring 容器启动时，它会扫描标注了该注解的类或方法，并为这些 Bean 生成一个 <strong>代理对象（Proxy）</strong>。</p>
 <h3 id="_2">执行流程</h3>
@@ -448,12 +451,7 @@ public void createUser() throws Exception {
 <hr class="post-footer-sep">
 <footer class="post-footer">
 <p>© 2025 - 2026 By <a href="https://duckee.top">DuckLing</a></p>
-</footer>
-<hr class="post-footer-sep">
-<div class="view-counter">
-  <span>👁 </span><span id="view-count">...</span><span> 次阅读</span>
-</div>
-</article>
+</footer></article>
 <script src="/view-counter.js"></script>
 </body>
 </html>
