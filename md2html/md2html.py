@@ -376,6 +376,15 @@ body {{
     color: {link};
 }}
 
+/* === View counter === */
+.blog-post .view-counter {{
+   	text-align: center;
+   	font-family: '{heading_font}', 'Noto Sans SC', sans-serif;
+   	font-size: 0.85em;
+   	color: rgba(255,255,255,0.3);
+   	margin-bottom: 0.5em;
+}}
+
 /* === Back link === */
 .blog-post .back-link {{
     display: inline-flex;
@@ -445,6 +454,14 @@ def build_html_page(body_html: str, config: dict) -> str:
         f'</header>'
     ) if site_title else ""
 
+    # --- View counter ---
+    view_counter_html = (
+        '<hr class="post-footer-sep">\n'
+        '<div class="view-counter">\n'
+        '  <span>👁 </span><span id="view-count">...</span><span> 次阅读</span>\n'
+        '</div>'
+    )
+
     # --- Back link ---
     back_html = f'<a class="back-link" href="{site_home}">← Home</a>'
 
@@ -512,8 +529,10 @@ def build_html_page(body_html: str, config: dict) -> str:
 {header_html}
 <article class="blog-post">
 {body_html}
+{view_counter_html}
 {back_html}{footer_html}
 </article>
+<script src="/view-counter.js"></script>
 </body>
 </html>"""
 

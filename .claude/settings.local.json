@@ -23,7 +23,10 @@
       "Bash(git commit -m ' *)",
       "Bash(claude *)",
       "Bash(npm view *)",
-      "Bash(npm i *)"
+      "Bash(npm i *)",
+      "Bash(git *)",
+      "Bash(curl *)",
+      "Bash(echo \"FAILED with exit code $?\")"
     ]
   }
 }
