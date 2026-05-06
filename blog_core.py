@@ -84,8 +84,8 @@ def step1_generate(
         # Replace auto-generated timestamp with user-specified datetime
         if article_datetime:
             full_html = re.sub(
-                r'<time class="post-date" datetime="[^"]*">[^<]*</time>',
-                f'<time class="post-date" datetime="{article_datetime}">{article_datetime}</time>',
+                r'(<time class="post-date" datetime=")[^"]*(">)[^<]*(</time>)',
+                rf'\1{article_datetime}\2{article_datetime}\3',
                 full_html,
             )
 
@@ -174,6 +174,10 @@ def step3_create_server(root_dir: Path, port: int = 8080):
                     continue
                 result = os.path.join(result, word)
             return result
+
+        def end_headers(self):
+            self.send_header('Cache-Control', 'no-cache, no-store, must-revalidate')
+            super().end_headers()
 
         def log_message(self, format, *args):
             pass  # suppress request logs to stderr
