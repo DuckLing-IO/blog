@@ -2,7 +2,6 @@
 using namespace std;
 
 int a[7] = {0,1,2,3,5,10,20};
-int b[7];
 bool dp[1001];
 
 int main(){
@@ -22,12 +21,14 @@ int main(){
 	}
 	int nc = q.size();
 	for(int i = 0; i < nc; i++){
-		for(int j = 1000; j >= 0; j--){
+		for(int j = 1000; j >= q[i]; j--){
 			if(dp[j-q[i]]){
 				dp[j] = 1;
-				cnt++;
 			}
 		}
+	}
+	for(int i = 1; i <= 1000; i++){
+		if(dp[i]) cnt++;
 	}
 	cout << "Total=" << cnt;
 	
