@@ -123,5 +123,45 @@ const articles = [
     id: '26.5.12_5',
     title: '[每日算法]B3612 【深进1.例1】求区间和',
     date: '2026-05-12 21:14'
+  },
+  {
+    id: 'P1101_单词方阵',
+    title: '[每日算法]P1101 单词方阵',
+    date: '2026-05-15 21:24'
+  },
+  {
+    id: 'P2036_[COCI_20082009_#2]_PERKET',
+    title: '[每日算法]P2036 [COCI 2008/2009 #2] PERKET',
+    date: '2026-05-15 21:24'
+  },
+  {
+    id: 'P1464_[PacNW_1999]_Function',
+    title: '[每日算法]P1464 [PacNW 1999] Function',
+    date: '2026-05-15 21:24'
+  },
+  {
+    id: 'P8649_[蓝桥杯_2017_省_B]_k_倍区间',
+    title: '[每日算法]P8649 [蓝桥杯 2017 省 B] k 倍区间',
+    date: '2026-05-15 21:24'
+  },
+  {
+    id: 'P3131_[USACO16JAN]_Subsequences_Summing_to_Sevens_S',
+    title: '[每日算法]P3131 [USACO16JAN] Subsequences Summing to Sevens S',
+    date: '2026-05-15 21:24'
+  },
+  {
+    id: 'CF816B_Karen_and_Coffee',
+    title: '[每日算法]CF816B Karen and Coffee',
+    date: '2026-05-15 21:23'
+  },
+  {
+    id: 'B3693_数列前缀和_4',
+    title: '[每日算法]B3693 数列前缀和 4',
+    date: '2026-05-15 21:23'
+  },
+  {
+    id: 'P1135_奇怪的电梯',
+    title: '[每日算法]P1135 奇怪的电梯',
+    date: '2026-05-15 21:22'
   }
 ]
