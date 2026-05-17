@@ -173,5 +173,10 @@ const articles = [
     id: 'P1473_[USACO2.3]_零的数列_Zero_Sum',
     title: '[每日算法]P1473 [USACO2.3] 零的数列 Zero Sum',
     date: '2026-05-17 21:46'
+  },
+  {
+    id: 'P2040_打开所有的灯',
+    title: '[每日算法]P2040 打开所有的灯',
+    date: '2026-05-17 22:14'
   }
 ]
