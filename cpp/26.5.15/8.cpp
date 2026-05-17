@@ -18,8 +18,8 @@ int bfs(){
             return y;
         }
         q.pop();
-        if(x+v[x]<=n&&!vi[x+v[x]]) q.push({x+v[x],y+1});
-        if(x-v[x]>=1&&!vi[x-v[x]]) q.push({x-v[x],y+1});
+        if(x+v[x]<=n&&!vi[x+v[x]]){q.push({x+v[x],y+1}); vi[x+v[x]] = 1;} 
+        if(x-v[x]>=1&&!vi[x-v[x]]){q.push({x-v[x],y+1}); vi[x-v[x]] = 1;} 
     }
     return -1;
 }

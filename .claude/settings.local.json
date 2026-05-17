@@ -30,7 +30,12 @@
       "Agent(*)",
       "TaskCreate(*)",
       "TaskUpdate(*)",
-      "AskUserQuestion(*)"
+      "AskUserQuestion(*)",
+      "Bash(cmd.exe *)",
+      "Bash(gh auth *)",
+      "Bash(powershell.exe -Command \"[Environment]::GetEnvironmentVariable\\('GITHUB_PERSONAL_ACCESS_TOKEN', 'User'\\)\")",
+      "Bash(powershell.exe -Command \"[Environment]::GetEnvironmentVariable\\('GITHUB_PERSONAL_ACCESS_TOKEN', 'Machine'\\)\")",
+      "Bash(python3 -c \"import json; f=open\\(r'C:\\\\Users\\\\lenovo\\\\.claude.json','r',encoding='utf-8'\\); d=json.load\\(f\\); print\\('Valid JSON'\\); print\\('mcpServers:', json.dumps\\(d.get\\('mcpServers', {}\\), indent=2\\)\\)\")"
     ]
   }
 }
