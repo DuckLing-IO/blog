@@ -22,7 +22,7 @@ void f1(int x, int y){
 void dfs(int idx, int s){
     if(idx > 9){
         if(check()){
-        ans = min(ans,s);
+            ans = min(ans,s);
         }
         return;
     }

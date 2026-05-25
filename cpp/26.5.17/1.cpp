@@ -39,7 +39,7 @@ int main(){
         for(int i = 1; i <= n; i++){
             cin >> t[i] >> d[i] >> l[i];
         }
-        //v[1] = 1;
+        
         if(dfs(1,0)){
             cout << "YES";
         }else{
