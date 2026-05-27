@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/article.css">
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.blog-post .code-block .hll { background-color: #49483e }
+.blog-post .code-block { background: #272822; color: #F8F8F2 }
+.blog-post .code-block .c { color: #959077 } /* Comment */
+.blog-post .code-block .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.blog-post .code-block .esc { color: #F8F8F2 } /* Escape */
+.blog-post .code-block .g { color: #F8F8F2 } /* Generic */
+.blog-post .code-block .k { color: #66D9EF } /* Keyword */
+.blog-post .code-block .l { color: #AE81FF } /* Literal */
+.blog-post .code-block .n { color: #F8F8F2 } /* Name */
+.blog-post .code-block .o { color: #FF4689 } /* Operator */
+.blog-post .code-block .x { color: #F8F8F2 } /* Other */
+.blog-post .code-block .p { color: #F8F8F2 } /* Punctuation */
+.blog-post .code-block .ch { color: #959077 } /* Comment.Hashbang */
+.blog-post .code-block .cm { color: #959077 } /* Comment.Multiline */
+.blog-post .code-block .cp { color: #959077 } /* Comment.Preproc */
+.blog-post .code-block .cpf { color: #959077 } /* Comment.PreprocFile */
+.blog-post .code-block .c1 { color: #959077 } /* Comment.Single */
+.blog-post .code-block .cs { color: #959077 } /* Comment.Special */
+.blog-post .code-block .gd { color: #FF4689 } /* Generic.Deleted */
+.blog-post .code-block .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.blog-post .code-block .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.blog-post .code-block .gr { color: #F8F8F2 } /* Generic.Error */
+.blog-post .code-block .gh { color: #F8F8F2 } /* Generic.Heading */
+.blog-post .code-block .gi { color: #A6E22E } /* Generic.Inserted */
+.blog-post .code-block .go { color: #66D9EF } /* Generic.Output */
+.blog-post .code-block .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.blog-post .code-block .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.blog-post .code-block .gu { color: #959077 } /* Generic.Subheading */
+.blog-post .code-block .gt { color: #F8F8F2 } /* Generic.Traceback */
+.blog-post .code-block .kc { color: #66D9EF } /* Keyword.Constant */
+.blog-post .code-block .kd { color: #66D9EF } /* Keyword.Declaration */
+.blog-post .code-block .kn { color: #FF4689 } /* Keyword.Namespace */
+.blog-post .code-block .kp { color: #66D9EF } /* Keyword.Pseudo */
+.blog-post .code-block .kr { color: #66D9EF } /* Keyword.Reserved */
+.blog-post .code-block .kt { color: #66D9EF } /* Keyword.Type */
+.blog-post .code-block .ld { color: #E6DB74 } /* Literal.Date */
+.blog-post .code-block .m { color: #AE81FF } /* Literal.Number */
+.blog-post .code-block .s { color: #E6DB74 } /* Literal.String */
+.blog-post .code-block .na { color: #A6E22E } /* Name.Attribute */
+.blog-post .code-block .nb { color: #F8F8F2 } /* Name.Builtin */
+.blog-post .code-block .nc { color: #A6E22E } /* Name.Class */
+.blog-post .code-block .no { color: #66D9EF } /* Name.Constant */
+.blog-post .code-block .nd { color: #A6E22E } /* Name.Decorator */
+.blog-post .code-block .ni { color: #F8F8F2 } /* Name.Entity */
+.blog-post .code-block .ne { color: #A6E22E } /* Name.Exception */
+.blog-post .code-block .nf { color: #A6E22E } /* Name.Function */
+.blog-post .code-block .nl { color: #F8F8F2 } /* Name.Label */
+.blog-post .code-block .nn { color: #F8F8F2 } /* Name.Namespace */
+.blog-post .code-block .nx { color: #A6E22E } /* Name.Other */
+.blog-post .code-block .py { color: #F8F8F2 } /* Name.Property */
+.blog-post .code-block .nt { color: #FF4689 } /* Name.Tag */
+.blog-post .code-block .nv { color: #F8F8F2 } /* Name.Variable */
+.blog-post .code-block .ow { color: #FF4689 } /* Operator.Word */
+.blog-post .code-block .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.blog-post .code-block .w { color: #F8F8F2 } /* Text.Whitespace */
+.blog-post .code-block .mb { color: #AE81FF } /* Literal.Number.Bin */
+.blog-post .code-block .mf { color: #AE81FF } /* Literal.Number.Float */
+.blog-post .code-block .mh { color: #AE81FF } /* Literal.Number.Hex */
+.blog-post .code-block .mi { color: #AE81FF } /* Literal.Number.Integer */
+.blog-post .code-block .mo { color: #AE81FF } /* Literal.Number.Oct */
+.blog-post .code-block .sa { color: #E6DB74 } /* Literal.String.Affix */
+.blog-post .code-block .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.blog-post .code-block .sc { color: #E6DB74 } /* Literal.String.Char */
+.blog-post .code-block .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.blog-post .code-block .sd { color: #E6DB74 } /* Literal.String.Doc */
+.blog-post .code-block .s2 { color: #E6DB74 } /* Literal.String.Double */
+.blog-post .code-block .se { color: #AE81FF } /* Literal.String.Escape */
+.blog-post .code-block .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.blog-post .code-block .si { color: #E6DB74 } /* Literal.String.Interpol */
+.blog-post .code-block .sx { color: #E6DB74 } /* Literal.String.Other */
+.blog-post .code-block .sr { color: #E6DB74 } /* Literal.String.Regex */
+.blog-post .code-block .s1 { color: #E6DB74 } /* Literal.String.Single */
+.blog-post .code-block .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.blog-post .code-block .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.blog-post .code-block .fm { color: #A6E22E } /* Name.Function.Magic */
+.blog-post .code-block .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.blog-post .code-block .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.blog-post .code-block .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.blog-post .code-block .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.blog-post .code-block .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+</style>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <img class="header-avatar" src="/img/avatar.jpg" alt="avatar">
+  <a class="header-title" href="/">DuckLing's Blog</a>
+</header>
+<article class="blog-post">
+<h1 id="p12835-2025-b">[每日算法]P12835 [蓝桥杯 2025 国 B] 蓝桥星数字</h1>
+<div class="post-meta">
+  <time class="post-date" datetime="2026-05-27 20:33">2026-05-27 20:33</time>
+  <span class="post-views">· <span id="view-count">...</span> 次浏览</span>
+</div>
+<h2 id="_1">题目描述</h2>
+<p>地球上，我们习惯用十进制数字来记录万物，从个位、十位，逐级向上构成了我们熟悉的自然数体系。</p>
+<p>然而，在遥远的蓝桥星，数字的排列和解读方式却与我们截然不同。蓝桥星人并不单纯地以数值大小来衡量一个数字，他们更注重数字内部蕴含的“节奏感”。因此，对他们而言，任何一个有效的数字，其从左到右每一位上的数字奇偶性都必须是交替出现的。</p>
+<p>例如，对于 10 这个数字，其十位是奇数 1，个位是偶数 0，呈现奇偶交替，因此 10 是个有效的数字。而对于 13 这个数字，其十位是奇数 1，个位也是奇数 3，不符合奇偶交替的条件，因此 13 不是个有效的数字。</p>
+<p>根据这个规则，蓝桥星的数字序列从 10 开始，依次为 $10, 12, 14, 16, 18, 21, 23, 25, 27, 29, 30, \ldots$。</p>
+<p>只不过，随着文明的发展，蓝桥星人需要一种方法，来快速找到第 $N$ 个符合这种奇偶交替规则的数字，以满足其日益增长的数字处理需求。现在，请你帮助蓝桥星人，编写程序找出并输出第 $N$ 个符合奇偶交替规则的数字。</p>
+<h2 id="_2">输入格式</h2>
+<p>输入包含一个正整数 $N$，表示需要查找第 $N$ 个符合规则的数字。</p>
+<h2 id="_3">输出格式</h2>
+<p>输出一个整数，表示第 $N$ 个符合奇偶交替规则的数字。</p>
+<h2 id="1">输入输出样例 #1</h2>
+<h3 id="1_1">输入 #1</h3>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>1
+</code></pre></div>
+<h3 id="1_2">输出 #1</h3>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>10
+</code></pre></div>
+<h2 id="2">输入输出样例 #2</h2>
+<h3 id="2_1">输入 #2</h3>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>11
+</code></pre></div>
+<h3 id="2_2">输出 #2</h3>
+<div class="code-block"><span class="filename">Text Only</span><pre><span></span><code>30
+</code></pre></div>
+<h2 id="_4">说明/提示</h2>
+<p><strong>【评测用例规模与约定】</strong></p>
+<p>对于 20% 的评测用例，$1 \leq N \leq 10^5$。</p>
+<p>对于 100% 的评测用例，$1 \leq N \leq 10^{12}$。</p>
+<hr />
+<h1 id="_5">题解</h1>
+<div class="code-block"><span class="filename">C++</span><pre><span></span><code><span class="cp">#include</span><span class="cpf">&lt;bits/stdc++.h&gt;</span>
+<span class="k">using</span><span class="w"> </span><span class="k">namespace</span><span class="w"> </span><span class="nn">std</span><span class="p">;</span>
+<span class="k">typedef</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">ll</span><span class="p">;</span>
+<span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">N</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">25</span><span class="p">;</span>
+
+<span class="n">ll</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">N</span><span class="p">][</span><span class="n">N</span><span class="p">];</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">N</span><span class="p">];</span>
+
+<span class="n">ll</span><span class="w"> </span><span class="nf">dfs</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">pos</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">last</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">lead</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">limit</span><span class="p">){</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">pos</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">lead</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">limit</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">pos</span><span class="p">][</span><span class="n">last</span><span class="p">]</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">-1</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">pos</span><span class="p">][</span><span class="n">last</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">up</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">limit</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">a</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mi">9</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">last</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">    </span><span class="n">ll</span><span class="w"> </span><span class="n">ans</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">up</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<span class="w">        </span><span class="kt">bool</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">lead</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">lead</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">  </span><span class="n">ans</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">dfs</span><span class="p">(</span><span class="n">pos</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">limit</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">up</span><span class="p">));</span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="n">ans</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">dfs</span><span class="p">(</span><span class="n">pos</span><span class="mi">-1</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">limit</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">up</span><span class="p">));</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">lead</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">limit</span><span class="p">)</span><span class="w"> </span><span class="n">dp</span><span class="p">[</span><span class="n">pos</span><span class="p">][</span><span class="n">last</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ans</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ans</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">bool</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="n">ll</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">ll</span><span class="w"> </span><span class="n">target</span><span class="p">){</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="w">    </span><span class="n">ll</span><span class="w"> </span><span class="n">xx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">xx</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">){</span>
+<span class="w">        </span><span class="n">a</span><span class="p">[</span><span class="o">++</span><span class="n">len</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xx</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">        </span><span class="n">xx</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">dfs</span><span class="p">(</span><span class="n">len</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">target</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">ll</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="n">ll</span><span class="w"> </span><span class="n">x</span><span class="p">){</span>
+<span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span><span class="mi">-1</span><span class="p">,</span><span class="k">sizeof</span><span class="p">(</span><span class="n">dp</span><span class="p">));</span>
+<span class="w">    </span><span class="n">ll</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">4e18</span><span class="p">;</span>
+<span class="w">    </span><span class="k">while</span><span class="p">(</span><span class="n">l</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">r</span><span class="p">){</span>
+<span class="w">        </span><span class="n">ll</span><span class="w"> </span><span class="n">mid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">l</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">check</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">)){</span>
+<span class="w">            </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mid</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">l</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<span class="w">    </span><span class="n">ios</span><span class="o">::</span><span class="n">sync_with_stdio</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">cin</span><span class="p">.</span><span class="n">tie</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="w">    </span><span class="n">ll</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="w">    </span><span class="n">cin</span><span class="w"> </span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">solve</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<a class="back-link" href="/">← Home</a>
+<hr class="post-footer-sep">
+<footer class="post-footer">
+<p>© 2025 - 2026 By <a href="https://duckee.top">DuckLing</a></p>
+</footer>
+</article>
+<script src="/view-counter.js"></script>
+</body>
+</html>
