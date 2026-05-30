@@ -1,62 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
-typedef long long ll;
-const int N = 1e5+5;
+const int N = 1e5+3;
 string s;
-
-int solve(int la, int ra, int lb, int rb){
-    bool a[26] = {0};
-    bool b[26] = {0};
-    int res = 0;
-    int i = la - 1, j = lb - 1;
-    while(i < ra && j < rb){
-        if(a[s[i] - 'a']){
-            i++;
-            continue;
-        }
-        if(b[s[j] - 'a']){
-            j++;
-            continue;
-        }
-        a[s[i] - 'a'] = 1;
-        b[s[j] - 'a'] = 1;
-        if(s[i] != s[j]) res++;
-    }
-    if(i < ra){
-        while(i < ra){
-            if(a[s[i] - 'a']){
-            i++;
-            continue;
-            }
-            a[s[i] - 'a'] = 1;
-            res++;
-        }
-    }else if(j < rb){
-        while(j < rb){
-            if(b[s[j] - 'a']){
-            j++;
-            continue;
-            }
-            b[s[j] - 'a'] = 1;
-            res++;
-        }
-    }
-    return res;
-}
-
+int nex[N][26];
 int main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
-    getline(cin, s);
+    cin >> s;
+    int n = s.size();
     int T;
     cin >> T;
-    while(T--){
-        int la,lb,ra,rb;
-        cin >> la >> ra >> lb >> rb;
-        cout << solve(la, ra, lb, rb);
-        if(T) cout << "\n";
+    for(int i = 0; i < 26; i++){
+        nex[n+1][i] = n+1;
     }
 
+    for(int i = n; i >= 1; i--){
+        for(int j = 0; j < 26; j++){
+            nex[i][j] = nex[i+1][j];
+        }
+        nex[i][s[i-1] - 'a'] = i;
+    }
+
+    while(T--){
+        int la, ra, lb, rb;
+        cin >> la >> ra >> lb >> rb;
+        vector<int> c1;
+        vector<int> c2;
+        for(int i = 0; i < 26; i++){
+            if(nex[la][i] <= ra) c1.push_back(nex[la][i] - 1);
+            if(nex[lb][i] <= rb) c2.push_back(nex[lb][i] - 1);
+        }
+        sort(c1.begin(), c1.end());
+        sort(c2.begin(), c2.end());
+        int len1 = c1.size();
+        int len2 = c2.size();
+        int cnt = abs(len1 - len2);
+        int up = min(len1, len2);
+        for(int i = 0; i < up; i++){
+            if(s[c1[i]] != s[c2[i]]) cnt++;
+        }
+        cout << cnt;
+        if(T) cout << "\n";
+    }
 
     return 0;
 }

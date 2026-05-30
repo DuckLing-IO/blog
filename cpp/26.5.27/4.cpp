@@ -7,6 +7,7 @@ int main(){
 
     ll n;
     cin >> n;
+    if(n == 0) return 0;
     ll x;
     cin >> x;
     ll ans = 0;
@@ -22,10 +23,10 @@ int main(){
             }
         }else if(x < y){
             ll c = x;
-            while(y > c * 2){
+            while(c*2 <= y){
                 c *= 2;
                 cnt --;
-                cnt = max(ll(0),cnt);
+                cnt = max(0ll,cnt);
             }
         }
         ans += cnt;

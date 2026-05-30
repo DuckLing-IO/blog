@@ -28,14 +28,14 @@ ll dfs(int pos, int sum, bool is_lead, bool is_limit, int target){
     return res;
 }
 
-ll solve(int x, int target){
+ll solve(ll x, int target){
     int len = 0;
     while(x > 0){
         a[++len] = x % 10;
         x /= 10;
     }
     memset(dp,-1,sizeof(dp));
-    return dfs(len,0,1,0,target);
+    return dfs(len,0,1,1,target);
 }
 
 int main(){
@@ -44,8 +44,8 @@ int main(){
 
     ll a,b;
     cin >> a >> b;
-    for(int i = 1; i < 10; i++){
-        cout << solve(b,i) - solve(a,i);
+    for(int i = 0; i < 10; i++){
+        cout << solve(b,i) - solve(a-1,i);
         if(i != 9) cout << " ";
     }
 
