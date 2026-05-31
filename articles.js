@@ -253,5 +253,10 @@ const articles = [
     id: 'P16685 帽子',
     title: 'P16685 帽子',
     date: '2026-05-30 20:49'
+  },
+  {
+    id: 'Kadane算法求最大小子串',
+    title: 'Kadane算法求最大/小子串',
+    date: '2026-05-31 09:49'
   }
 ]
