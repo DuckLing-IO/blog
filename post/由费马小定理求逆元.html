@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/article.css">
+<style>
+pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.blog-post .code-block .hll { background-color: #49483e }
+.blog-post .code-block { background: #272822; color: #F8F8F2 }
+.blog-post .code-block .c { color: #959077 } /* Comment */
+.blog-post .code-block .err { color: #ED007E; background-color: #1E0010 } /* Error */
+.blog-post .code-block .esc { color: #F8F8F2 } /* Escape */
+.blog-post .code-block .g { color: #F8F8F2 } /* Generic */
+.blog-post .code-block .k { color: #66D9EF } /* Keyword */
+.blog-post .code-block .l { color: #AE81FF } /* Literal */
+.blog-post .code-block .n { color: #F8F8F2 } /* Name */
+.blog-post .code-block .o { color: #FF4689 } /* Operator */
+.blog-post .code-block .x { color: #F8F8F2 } /* Other */
+.blog-post .code-block .p { color: #F8F8F2 } /* Punctuation */
+.blog-post .code-block .ch { color: #959077 } /* Comment.Hashbang */
+.blog-post .code-block .cm { color: #959077 } /* Comment.Multiline */
+.blog-post .code-block .cp { color: #959077 } /* Comment.Preproc */
+.blog-post .code-block .cpf { color: #959077 } /* Comment.PreprocFile */
+.blog-post .code-block .c1 { color: #959077 } /* Comment.Single */
+.blog-post .code-block .cs { color: #959077 } /* Comment.Special */
+.blog-post .code-block .gd { color: #FF4689 } /* Generic.Deleted */
+.blog-post .code-block .ge { color: #F8F8F2; font-style: italic } /* Generic.Emph */
+.blog-post .code-block .ges { color: #F8F8F2; font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.blog-post .code-block .gr { color: #F8F8F2 } /* Generic.Error */
+.blog-post .code-block .gh { color: #F8F8F2 } /* Generic.Heading */
+.blog-post .code-block .gi { color: #A6E22E } /* Generic.Inserted */
+.blog-post .code-block .go { color: #66D9EF } /* Generic.Output */
+.blog-post .code-block .gp { color: #FF4689; font-weight: bold } /* Generic.Prompt */
+.blog-post .code-block .gs { color: #F8F8F2; font-weight: bold } /* Generic.Strong */
+.blog-post .code-block .gu { color: #959077 } /* Generic.Subheading */
+.blog-post .code-block .gt { color: #F8F8F2 } /* Generic.Traceback */
+.blog-post .code-block .kc { color: #66D9EF } /* Keyword.Constant */
+.blog-post .code-block .kd { color: #66D9EF } /* Keyword.Declaration */
+.blog-post .code-block .kn { color: #FF4689 } /* Keyword.Namespace */
+.blog-post .code-block .kp { color: #66D9EF } /* Keyword.Pseudo */
+.blog-post .code-block .kr { color: #66D9EF } /* Keyword.Reserved */
+.blog-post .code-block .kt { color: #66D9EF } /* Keyword.Type */
+.blog-post .code-block .ld { color: #E6DB74 } /* Literal.Date */
+.blog-post .code-block .m { color: #AE81FF } /* Literal.Number */
+.blog-post .code-block .s { color: #E6DB74 } /* Literal.String */
+.blog-post .code-block .na { color: #A6E22E } /* Name.Attribute */
+.blog-post .code-block .nb { color: #F8F8F2 } /* Name.Builtin */
+.blog-post .code-block .nc { color: #A6E22E } /* Name.Class */
+.blog-post .code-block .no { color: #66D9EF } /* Name.Constant */
+.blog-post .code-block .nd { color: #A6E22E } /* Name.Decorator */
+.blog-post .code-block .ni { color: #F8F8F2 } /* Name.Entity */
+.blog-post .code-block .ne { color: #A6E22E } /* Name.Exception */
+.blog-post .code-block .nf { color: #A6E22E } /* Name.Function */
+.blog-post .code-block .nl { color: #F8F8F2 } /* Name.Label */
+.blog-post .code-block .nn { color: #F8F8F2 } /* Name.Namespace */
+.blog-post .code-block .nx { color: #A6E22E } /* Name.Other */
+.blog-post .code-block .py { color: #F8F8F2 } /* Name.Property */
+.blog-post .code-block .nt { color: #FF4689 } /* Name.Tag */
+.blog-post .code-block .nv { color: #F8F8F2 } /* Name.Variable */
+.blog-post .code-block .ow { color: #FF4689 } /* Operator.Word */
+.blog-post .code-block .pm { color: #F8F8F2 } /* Punctuation.Marker */
+.blog-post .code-block .w { color: #F8F8F2 } /* Text.Whitespace */
+.blog-post .code-block .mb { color: #AE81FF } /* Literal.Number.Bin */
+.blog-post .code-block .mf { color: #AE81FF } /* Literal.Number.Float */
+.blog-post .code-block .mh { color: #AE81FF } /* Literal.Number.Hex */
+.blog-post .code-block .mi { color: #AE81FF } /* Literal.Number.Integer */
+.blog-post .code-block .mo { color: #AE81FF } /* Literal.Number.Oct */
+.blog-post .code-block .sa { color: #E6DB74 } /* Literal.String.Affix */
+.blog-post .code-block .sb { color: #E6DB74 } /* Literal.String.Backtick */
+.blog-post .code-block .sc { color: #E6DB74 } /* Literal.String.Char */
+.blog-post .code-block .dl { color: #E6DB74 } /* Literal.String.Delimiter */
+.blog-post .code-block .sd { color: #E6DB74 } /* Literal.String.Doc */
+.blog-post .code-block .s2 { color: #E6DB74 } /* Literal.String.Double */
+.blog-post .code-block .se { color: #AE81FF } /* Literal.String.Escape */
+.blog-post .code-block .sh { color: #E6DB74 } /* Literal.String.Heredoc */
+.blog-post .code-block .si { color: #E6DB74 } /* Literal.String.Interpol */
+.blog-post .code-block .sx { color: #E6DB74 } /* Literal.String.Other */
+.blog-post .code-block .sr { color: #E6DB74 } /* Literal.String.Regex */
+.blog-post .code-block .s1 { color: #E6DB74 } /* Literal.String.Single */
+.blog-post .code-block .ss { color: #E6DB74 } /* Literal.String.Symbol */
+.blog-post .code-block .bp { color: #F8F8F2 } /* Name.Builtin.Pseudo */
+.blog-post .code-block .fm { color: #A6E22E } /* Name.Function.Magic */
+.blog-post .code-block .vc { color: #F8F8F2 } /* Name.Variable.Class */
+.blog-post .code-block .vg { color: #F8F8F2 } /* Name.Variable.Global */
+.blog-post .code-block .vi { color: #F8F8F2 } /* Name.Variable.Instance */
+.blog-post .code-block .vm { color: #F8F8F2 } /* Name.Variable.Magic */
+.blog-post .code-block .il { color: #AE81FF } /* Literal.Number.Integer.Long */
+</style>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <img class="header-avatar" src="/img/avatar.jpg" alt="avatar">
+  <a class="header-title" href="/">DuckLing's Blog</a>
+</header>
+<article class="blog-post">
+<h1 id="_1">由费马小定理求逆元</h1>
+<div class="post-meta">
+  <time class="post-date" datetime="2026-06-01 09:32">2026-06-01 09:32</time>
+  <span class="post-views">· <span id="view-count">...</span> 次浏览</span>
+</div>
+<p>在算法竞赛和离散数学中，“逆元”（Modular Multiplicative Inverse）是一个绕不开的里程碑。</p>
+<p>简单来说：<strong>逆元就是模运算（取余）世界里的“倒数”。它的存在是为了解决在取模的情况下“无法直接做除法”的问题。</strong></p>
+<p>下面我将分步骤为你详细拆解什么是逆元，为什么组合数需要它，以及它的底层原理。</p>
+<h3 id="_2">一、 为什么模运算里不能直接做除法？</h3>
+<p>在讲逆元之前，我们先看看加、减、乘法在取模时的完美性质。假设我们在对 $7$ 取模：</p>
+<ul>
+<li><strong>加法：</strong> $(10 + 5) \pmod 7 = 15 \pmod 7 = 1$。</li>
+<li>分开取模：$(10 \pmod 7 + 5 \pmod 7) \pmod 7 = (3 + 5) \pmod 7 = 8 \pmod 7 = 1$。（成立）</li>
+<li><strong>乘法：</strong> $(10 \times 5) \pmod 7 = 50 \pmod 7 = 1$。</li>
+<li>分开取模：$(10 \pmod 7 \times 5 \pmod 7) \pmod 7 = (3 \times 5) \pmod 7 = 15 \pmod 7 = 1$。（成立）</li>
+</ul>
+<p>但是，<strong>除法会崩溃</strong>！</p>
+<p>我们来看这个例子：计算 $(12 \div 4) \pmod 5$。</p>
+<ul>
+<li><strong>正确的实际结果：</strong> $12 \div 4 = 3$，然后 $3 \pmod 5 = 3$。</li>
+<li><strong>如果我们先分别取模：</strong> $(12 \pmod 5) \div (4 \pmod 5) = 2 \div 4 = 0.5$。</li>
+</ul>
+<p>在整数取模的世界里，出现了小数（$0.5$），这就彻底乱套了。因为模运算的规则是必须在整数集合内闭环。<strong>因此，我们不能对除数和被除数先取模再相除。</strong></p>
+<p>但是，当数字非常大时（比如算组合数），我们又必须在计算中途不断取模以防数据溢出（比如超出 <code>long long</code> 的范围）。这就陷入了死局：数字太大必须取模，但取模后又不能做除法。</p>
+<p>这时候，<strong>逆元</strong>就闪亮登场了。</p>
+<h3 id="_3">二、 什么是逆元？</h3>
+<p>在常规实数运算中，除以一个数等于乘以这个数的倒数：</p>
+<p>$A \div B = A \times \frac{1}{B}$ （其中 $\frac{1}{B}$ 是 $B$ 的乘法逆元，满足 $B \times \frac{1}{B} = 1$）。</p>
+<p>在模 $p$ 的世界里，我们也想把<strong>除法变成乘法</strong>。</p>
+<p>如果我们在模 $p$ 意义下，要计算 $A \div B \pmod p$，我们能不能找到一个整数 $x$，使得：</p>
+<p>$A \div B \equiv A \times x \pmod p$ ？</p>
+<p>为了让这个等式成立，这个整数 $x$ 必须满足一个条件：</p>
+<p><strong>$B \times x \equiv 1 \pmod p$</strong></p>
+<p>如果能找到这样一个整数 $x$，我们就称 <strong>$x$ 是 $B$ 在模 $p$ 意义下的逆元</strong>，通常记作 $B^{-1}$。</p>
+<h4 id="_4">逆元运算验证：</h4>
+<p>回到刚才那个崩溃的例子：计算 $(12 \div 4) \pmod 5$。</p>
+<p>我们现在不做除法，而是去找 $4$ 在模 $5$ 意义下的逆元 $x$。</p>
+<p>条件是：$4 \times x \equiv 1 \pmod 5$。</p>
+<p>我们试一下：</p>
+<ul>
+<li>$4 \times 1 = 4 \equiv 4 \pmod 5$</li>
+<li>$4 \times 2 = 8 \equiv 3 \pmod 5$</li>
+<li>$4 \times 3 = 12 \equiv 2 \pmod 5$</li>
+<li>$4 \times 4 = 16 \equiv 1 \pmod 5$  🎉 找到了！</li>
+</ul>
+<p>所以，$4$ 在模 $5$ 下的逆元是 $4$。</p>
+<p>现在我们把除法变成乘法来算：</p>
+<p>$12 \div 4 \pmod 5 \Rightarrow (12 \times 4) \pmod 5 = 48 \pmod 5 = 3$。</p>
+<p>你看！分开取模也可以算对：</p>
+<p>$(12 \pmod 5 \times 4) \pmod 5 = (2 \times 4) \pmod 5 = 8 \pmod 5 = 3$。</p>
+<p>结果完美吻合。</p>
+<h3 id="_5">三、 为什么算组合数的时候需要逆元？</h3>
+<p>组合数的公式是：</p>
+<p>$$C(n, k) = \frac{n!}{k!(n-k)!}$$</p>
+<p>在算法竞赛中，题目通常会要求“答案对 $1000000007$ 取模”（因为组合数增长极其迅速，几百的阶乘就能撑爆所有数据类型）。</p>
+<p>根据上面的推理，我们要在计算过程中不断取模：</p>
+<ol>
+<li><strong>分子：</strong> $n! \pmod p$ 可以通过一步步乘并取模得到。</li>
+<li><strong>分母：</strong> 包含除法操作 $\div (k! \times (n-k)!)$。</li>
+</ol>
+<p>因为不能直接用取模后的分子除以取模后的分母，所以我们<strong>必须把除法转化为乘法</strong>：</p>
+<p>$$C(n, k) \pmod p = \left( n! \times (k!)^{-1} \times ((n-k)!)^{-1} \right) \pmod p$$</p>
+<p>也就是说，我们需要分别求出 $k!$ 和 $(n-k)!$ 在模 $p$ 意义下的逆元，然后全部用乘法和取模来计算，这就彻底绕开了除法。</p>
+<h3 id="_6">四、 如何计算逆元？（费马小定理）</h3>
+<p>那么，代码里是怎么快速求出一个数 $a$ 模 $p$ 的逆元的呢？最常用、最简单的武器就是<strong>费马小定理 (Fermat's Little Theorem)</strong>。</p>
+<p><strong>费马小定理的内容：</strong></p>
+<p>如果 $p$ 是一个质数（素数），且整数 $a$ 不是 $p$ 的倍数，那么：</p>
+<p>$$a^{p-1} \equiv 1 \pmod p$$</p>
+<p>（注：竞赛题中常见的模数 $1000000007$ 就是一个大质数，完美符合条件）。</p>
+<p><strong>从费马小定理推导逆元：</strong></p>
+<p>我们将等式左边拆出一个 $a$ 来：</p>
+<p>$$a \times a^{p-2} \equiv 1 \pmod p$$</p>
+<p>对比一下逆元的定义：$a \times x \equiv 1 \pmod p$。</p>
+<p>你会惊喜地发现，那个神秘的逆元 $x$，刚好就是：</p>
+<p><strong>$x = a^{p-2} \pmod p$</strong></p>
+<p>所以，要求 $a$ 的逆元，<strong>只需要求 $a$ 的 $p-2$ 次方，然后对 $p$ 取模即可</strong>。</p>
+<p>为了快速计算 $a^{p-2}$，我们在代码里使用了<strong>快速幂算法</strong> $O(\log p)$。</p>
+<a class="back-link" href="/">← Home</a>
+<hr class="post-footer-sep">
+<footer class="post-footer">
+<p>© 2025 - 2026 By <a href="https://duckee.top">DuckLing</a></p>
+</footer>
+</article>
+<script src="/view-counter.js"></script>
+</body>
+</html>
