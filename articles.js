@@ -273,5 +273,10 @@ const articles = [
     id: '组合数计算模板',
     title: '组合数计算模板',
     date: '2026-06-01 10:22'
+  },
+  {
+    id: 'Kruskal算法求最小生成树',
+    title: 'Kruskal算法求最小生成树',
+    date: '2026-06-02 17:47'
   }
 ]
