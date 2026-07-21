@@ -6,6 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 import sys
+import subprocess
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -68,6 +69,24 @@ class BlogStudioTests(unittest.TestCase):
         with patch.object(blog_gui.messagebox, "askyesno", return_value=True):
             app.delete_current()
         self.assertFalse(published.exists())
+        app.destroy()
+
+    def test_sync_pushes_existing_unpublished_commit(self) -> None:
+        app = blog_gui.BlogStudio()
+        app.withdraw()
+        results = [
+            subprocess.CompletedProcess([], 0, "", ""),  # git add
+            subprocess.CompletedProcess([], 0, "", ""),  # no staged changes
+            subprocess.CompletedProcess([], 0, "origin/main\n", ""),
+            subprocess.CompletedProcess([], 0, "", ""),  # safe fast-forward
+            subprocess.CompletedProcess([], 0, "", ""),  # push
+        ]
+        with patch.object(app, "_run_git", side_effect=results) as run_git:
+            with patch.object(app, "_finish_git_sync"):
+                app._git_sync_worker("publish: test")
+                app.update()
+        push_call = run_git.call_args_list[-1].args[0]
+        self.assertEqual(push_call, ["push", "origin", "HEAD:main"])
         app.destroy()
 
 

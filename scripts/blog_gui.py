@@ -335,6 +335,8 @@ class BlogStudio(Tk):
         self.sync_button.pack(side=RIGHT)
         ttk.Button(footer, text="内容检查", style="Secondary.TButton",
                    command=self.run_content_check).pack(side=RIGHT, padx=(0, 9))
+        ttk.Button(footer, text="GitHub 登录", style="Secondary.TButton",
+                   command=self.login_github).pack(side=RIGHT, padx=(0, 9))
 
     def _bind_events(self) -> None:
         self.search_var.trace_add("write", lambda *_: self.refresh_tree())
@@ -720,20 +722,54 @@ class BlogStudio(Tk):
             daemon=True,
         ).start()
 
-    def _run_git(self, args: list[str], check: bool = True) -> subprocess.CompletedProcess[str]:
-        command = ["git", "-c", f"safe.directory={blog.ROOT}", "-C", str(blog.ROOT), *args]
-        result = subprocess.run(
-            command,
-            text=True,
-            encoding="utf-8",
-            errors="replace",
-            capture_output=True,
-            startupinfo=hidden_startupinfo(),
-        )
+    def _run_git(
+        self,
+        args: list[str],
+        check: bool = True,
+        timeout: int = 45,
+    ) -> subprocess.CompletedProcess[str]:
+        # Git for Windows' Schannel backend can crash with SEC_E_NO_CREDENTIALS
+        # when called from a windowed background process. Git's bundled OpenSSL
+        # backend is deterministic here and also works with the local proxy.
+        command = [
+            "git",
+            "-c", f"safe.directory={blog.ROOT}",
+            "-c", "http.sslBackend=openssl",
+            "-c", "credential.interactive=never",
+            "-C", str(blog.ROOT),
+            *args,
+        ]
+        environment = os.environ.copy()
+        environment["GIT_TERMINAL_PROMPT"] = "0"
+        environment["GCM_INTERACTIVE"] = "Never"
+        try:
+            result = subprocess.run(
+                command,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                capture_output=True,
+                startupinfo=hidden_startupinfo(),
+                creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+                env=environment,
+                timeout=timeout,
+            )
+        except subprocess.TimeoutExpired as exc:
+            raise RuntimeError(
+                f"Git 操作超过 {timeout} 秒，已自动停止。请检查网络或代理后重试。"
+            ) from exc
         if check and result.returncode != 0:
             detail = (result.stderr or result.stdout).strip()
+            if not detail and args and args[0] == "push":
+                detail = (
+                    "GitHub 身份验证失败。请先点击“GitHub 登录”完成授权，"
+                    "然后再次点击同步；本地提交已经安全保留。"
+                )
             raise RuntimeError(detail or f"git {' '.join(args)} 执行失败")
         return result
+
+    def _set_sync_stage(self, message: str) -> None:
+        self.after(0, lambda: self.footer_status_var.set(message))
 
     def _git_sync_worker(self, commit_message: str) -> None:
         managed_paths = [
@@ -742,17 +778,38 @@ class BlogStudio(Tk):
             "CNAME", "view-counter.js", ".gitignore",
         ]
         try:
+            self._set_sync_stage("正在整理博客文件…")
             self._run_git(["add", "-A", "--", *managed_paths])
             diff = self._run_git(["diff", "--cached", "--quiet"], check=False)
-            if diff.returncode == 0:
-                self.after(0, lambda: self._finish_git_sync(
-                    True, "没有需要提交的博客改动。线上内容已是最新版本。"
-                ))
-                return
-            if diff.returncode != 1:
+            if diff.returncode == 1:
+                self._set_sync_stage("正在创建本地提交…")
+                self._run_git(["commit", "-m", commit_message], timeout=60)
+            elif diff.returncode != 0:
                 raise RuntimeError("无法检查待提交的博客改动。")
-            self._run_git(["commit", "-m", commit_message])
-            push = self._run_git(["push"])
+
+            remote_head = self._run_git(
+                ["symbolic-ref", "--short", "refs/remotes/origin/HEAD"],
+                check=False,
+            )
+            remote_branch = remote_head.stdout.strip().removeprefix("origin/") or "main"
+            remote_ref = f"origin/{remote_branch}"
+            ancestry = self._run_git(
+                ["merge-base", "--is-ancestor", remote_ref, "HEAD"],
+                check=False,
+            )
+            if ancestry.returncode == 1:
+                raise RuntimeError(
+                    f"当前分支不能安全地快进更新 {remote_ref}。"
+                    "请先在 Git 中合并远程更新，程序不会强制覆盖远程历史。"
+                )
+            if ancestry.returncode != 0:
+                raise RuntimeError(f"无法确认当前提交与 {remote_ref} 的关系。")
+
+            self._set_sync_stage(f"正在推送到 GitHub · {remote_branch}（最长 120 秒）…")
+            push = self._run_git(
+                ["push", "origin", f"HEAD:{remote_branch}"],
+                timeout=120,
+            )
             detail = (push.stdout or push.stderr).strip()
             message = "已提交并推送到 GitHub。GitHub Pages 将自动更新网站。"
             if detail:
@@ -760,6 +817,29 @@ class BlogStudio(Tk):
             self.after(0, lambda: self._finish_git_sync(True, message))
         except Exception as exc:
             self.after(0, lambda: self._finish_git_sync(False, str(exc)))
+
+    def login_github(self) -> None:
+        if self.git_busy:
+            messagebox.showinfo("请稍候", "请等待当前 Git 操作结束后再登录。", parent=self)
+            return
+        if not messagebox.askyesno(
+            "登录 GitHub",
+            "将打开 Git Credential Manager 登录窗口。\n\n"
+            "请按提示在浏览器中授权 DuckLing-IO/blog 的 GitHub 账号，完成后再点击同步。",
+            parent=self,
+        ):
+            return
+        command = [
+            "git",
+            "-c", "http.sslBackend=openssl",
+            "credential-manager", "github", "login",
+        ]
+        flags = subprocess.CREATE_NEW_CONSOLE if os.name == "nt" else 0
+        try:
+            subprocess.Popen(command, cwd=blog.ROOT, creationflags=flags)
+            self.footer_status_var.set("GitHub 登录已打开 · 完成授权后重新点击同步")
+        except Exception as exc:
+            messagebox.showerror("无法打开 GitHub 登录", str(exc), parent=self)
 
     def _finish_git_sync(self, success: bool, message: str) -> None:
         self.git_busy = False
