@@ -1,0 +1,40 @@
+---
+layout: default
+---
+<main id="main-content" class="post-shell">
+  <article class="post" itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="post-header">
+      <a class="post-header__back" href="{{ '/' | relative_url }}">文章索引</a>
+      <h1 itemprop="headline">{{ page.title | escape }}</h1>
+      <div class="post-meta">
+        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%Y-%m-%d %H:%M" }}</time>
+        <span aria-hidden="true">·</span>
+        <span class="post-views"><span id="view-count">—</span> 次浏览</span>
+      </div>
+    </header>
+
+    <div class="post-content" itemprop="articleBody">
+      {{ content }}
+    </div>
+
+    <footer class="post-footer">
+      <a class="post-footer__home" href="{{ '/' | relative_url }}">← 返回全部文章</a>
+      <p>© 2025–{{ site.time | date: "%Y" }} By <a href="https://duckee.top">DuckLing</a></p>
+    </footer>
+  </article>
+</main>
+
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+    options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script defer src="{{ '/view-counter.js' | relative_url }}"></script>
+<script>
+  document.querySelectorAll('.post-content img').forEach((image) => {
+    image.loading = 'lazy';
+    image.decoding = 'async';
+  });
+</script>

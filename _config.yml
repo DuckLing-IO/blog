@@ -1,0 +1,43 @@
+title: "DuckLing's Blog"
+description: "DuckLing 的学习笔记、算法题解与开发记录"
+url: "https://blog.duckee.top"
+baseurl: ""
+lang: zh-CN
+timezone: Asia/Shanghai
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  hard_wrap: false
+
+permalink: /post/:slug.html
+future: false
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - AGENTS.md
+  - CLAUDE.md
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - scripts
+  - markdown
+  - md2html
+  - cpp
+  - view-counter
+  - output
+  - .playwright-cli
+  - "*.py"
+  - "*.pyc"
+  - "*.pyo"
+  - "*.spec"
+  - "*.exe"
+

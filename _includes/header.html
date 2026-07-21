@@ -1,0 +1,12 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="返回博客首页">
+      <img class="brand__avatar" src="{{ '/img/avatar.jpg' | relative_url }}" alt="" width="40" height="40" fetchpriority="high">
+      <span class="brand__name" translate="no">DuckLing's Blog</span>
+    </a>
+    <nav class="site-nav" aria-label="主导航">
+      <a href="{{ '/' | relative_url }}"{% if page.url == '/' %} aria-current="page"{% endif %}>文章</a>
+      <a href="https://duckee.top" target="_blank" rel="noopener noreferrer">主站<span class="external-mark" aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>

@@ -2,3 +2,16 @@ __pycache__/
 *.pyc
 *.pyo
 .claude/
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+.bundle/
+vendor/
+output/
+.playwright-cli/
+build/
+dist/
+DuckLingBlogManager.exe
+DuckLingBlogManager/
+img/blog-manager.ico

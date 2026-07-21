@@ -1,67 +1,58 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DuckLing's Blog</title>
-  <link rel="icon" href="img/favicon.png">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+---
+layout: default
+---
+<main id="main-content" class="home-shell">
+  <section class="home-intro" aria-labelledby="home-title">
+    <div>
+      <p class="eyebrow">Learning log · 学习账本</p>
+      <h1 id="home-title">把每天学到的，<br><span>留成可以检索的痕迹。</span></h1>
+      <p class="home-intro__copy">算法题解、开发笔记，以及那些值得回头再看的思路。</p>
+    </div>
+    <p class="entry-count"><strong>{{ site.posts | size }}</strong><span>篇公开记录</span></p>
+  </section>
 
-  <div id="app">
-    <!-- Fixed frosted-glass header -->
-    <header class="site-header">
-      <img class="header-avatar" src="img/avatar.jpg" alt="avatar">
-      <span class="header-title">DuckLing's Blog</span>
-      <a class="header-link" href="https://duckee.top" target="_blank" rel="noopener">前往主站</a>
-    </header>
+  <section class="archive" aria-labelledby="archive-title">
+    <div class="archive-tools">
+      <div>
+        <p class="eyebrow">Archive</p>
+        <h2 id="archive-title">文章索引</h2>
+      </div>
+      <div class="search-field">
+        <label class="sr-only" for="post-search">搜索文章</label>
+        <span aria-hidden="true">⌕</span>
+        <input id="post-search" name="q" type="search" placeholder="搜索标题…" autocomplete="off">
+      </div>
+    </div>
 
-    <!-- Article list -->
-    <main class="main-content">
-      <template v-for="group in grouped" :key="group.date">
-        <div class="date-group">
-          <div class="date-heading">{{ group.date }}</div>
-          <a
-            v-for="a in group.articles"
-            :key="a.id"
-            :href="'/post/' + a.id + '.html'"
-            class="post-item post-title"
-          >{{ a.title }}</a>
+    <p id="search-status" class="search-status" role="status" aria-live="polite"></p>
+
+    <div id="post-list" class="timeline">
+      {% if site.posts.size == 0 %}<p class="empty-search">还没有公开文章。</p>{% endif %}
+      {% assign posts_by_day = site.posts | group_by_exp: "post", "post.date | date: '%Y-%m-%d'" %}
+      {% for day in posts_by_day %}
+      <section class="timeline-group" data-post-group>
+        <time class="timeline-date" datetime="{{ day.name }}">{{ day.name }}</time>
+        <div class="timeline-entries">
+          {% for post in day.items %}
+          <article class="timeline-entry" data-post data-search="{{ post.title | downcase | escape }}">
+            <a href="{{ post.url | relative_url | uri_escape }}">
+              <span>{{ post.title | escape }}</span>
+              <span class="timeline-entry__arrow" aria-hidden="true">↗</span>
+            </a>
+          </article>
+          {% endfor %}
         </div>
-      </template>
-    </main>
-  </div>
+      </section>
+      {% endfor %}
+    </div>
 
-  <!-- Vue 3 via CDN -->
-  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-  <script src="articles.js"></script>
+    <p id="empty-search" class="empty-search" hidden>没有找到匹配的文章，换个关键词试试。</p>
+  </section>
 
-  <script>
-    const { createApp, computed } = Vue
+  <footer class="site-footer">
+    <p>© 2025–{{ site.time | date: "%Y" }} DuckLing</p>
+    <a href="https://www.duckee.top/privacy.html">访客数据说明</a>
+  </footer>
+</main>
 
-    const app = createApp({
-      setup() {
-        const grouped = computed(() => {
-          const sorted = [...articles].sort((a, b) => b.date.localeCompare(a.date))
-          const groups = []
-          for (const a of sorted) {
-            const day = a.date.slice(0, 10)
-            const last = groups[groups.length - 1]
-            if (last && last.date === day) {
-              last.articles.push(a)
-            } else {
-              groups.push({ date: day, articles: [a] })
-            }
-          }
-          return groups
-        })
-        return { grouped }
-      }
-    })
-
-    app.mount('#app')
-  </script>
-
-</body>
-</html>
+<script defer src="{{ '/assets/js/home.js' | relative_url }}"></script>
