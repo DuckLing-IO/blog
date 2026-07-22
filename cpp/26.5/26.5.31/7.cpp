@@ -11,7 +11,7 @@ int main(){
     sort(s2.begin(), s2.end());
     int i = 0, j = 0;
     while(i < n && j < m){
-        if(s1[i] < s2[j]){
+        if(s1[i] <= s2[j]){
             cout << s1[i];
             i++;
         }else{

@@ -9,10 +9,7 @@ bool check(ll x){
     ll cnt = 0;
     for(int i = 1; i <= n; i++){
         ll l = a[i];
-        while(l > x){
-            cnt ++;
-            l -= x;
-        }
+        cnt += (a[i] - 1) / x;
     }
     return cnt <= m+1;
 }
@@ -28,7 +25,7 @@ int main(){
         a[i] = no - la;
         la = no;
     }
-    ll l = 0ll;
+    ll l = 1ll;
     ll r = la;
     ll ans = 0;
     while(l <= r){

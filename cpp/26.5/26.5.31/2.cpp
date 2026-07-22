@@ -17,14 +17,20 @@ int main(){
     for(int i = 1; i <= m; i++){
         ll k;
         cin >> k;
-        ll ma = 0ll;
-        ll mi = 0ll;
+        ll r1 = 0ll;
+        ll r2 = 0ll;
+        ll a1 = 0ll;
+        ll a2 = 0ll;
         for(int i = 1; i <= n; i++){
             ll d = (a[i] ^ k) - a[i];
-            ma = max(0ll, ma + d);
-            mi = min(0ll, mi + d);
+            r1 += d;
+            if(r1 > 0) r1 = 0;
+            r2 += d;
+            if(r2 < 0) r2 = 0;
+            a1 = min(a1, r1);
+            a2 = max(a2, r2);
         }
-        cout << sum + mi << " " << sum + ma;
+        cout << sum + a1 << " " << sum + a2;
         if(i != m) cout << "\n";
     }
 

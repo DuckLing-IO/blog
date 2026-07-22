@@ -37,7 +37,7 @@ int main(){
 
     for(int i = 1; i <= p+1; i++){
         for(int j = n; j >= 2; --j){
-            d[i] = d[i] - d[i-1];
+            d[j] = d[j] - d[j-1];
         }
     }
     __int128_t ans = 0;

@@ -9,7 +9,7 @@ layout: default
       <div class="post-meta">
         <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%Y-%m-%d %H:%M" }}</time>
         <span aria-hidden="true">·</span>
-        <span class="post-views"><span id="view-count">—</span> 次浏览</span>
+        <span id="view-count" class="post-views" aria-live="polite">浏览量加载中</span>
       </div>
     </header>
 
@@ -31,7 +31,7 @@ layout: default
   };
 </script>
 <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<script defer src="{{ '/view-counter.js' | relative_url }}"></script>
+<script defer src="{{ '/assets/js/view-counter.js' | relative_url }}"></script>
 <script>
   document.querySelectorAll('.post-content img').forEach((image) => {
     image.loading = 'lazy';

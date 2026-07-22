@@ -67,6 +67,7 @@ int main(){
         mag(u, v);
         ans += w;
         cnt ++;
+        if(cnt == ma) break;
     }
 
     if(cnt != ma) cout << "No Answer";

@@ -2,68 +2,69 @@
 
 This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
 
+## Mandatory workspace boundary
+
+- The parent workspace is `D:\_MyBlog`.
+- Codex may inspect, search, create, edit, or delete content only inside `D:\_MyBlog\blogweb` and `D:\_MyBlog\DuckLing-Blog`.
+- Every other file and directory under `D:\_MyBlog` is out of scope: do not list it, read it, search it, or modify it.
+- Keep all commands, tools, temporary files, and generated artifacts scoped to the two allowed directories above.
+- If a future task appears to require access outside these directories, stop and ask the user for explicit permission before accessing it.
+- Treat this boundary as a foundational project requirement that overrides ordinary repository-discovery habits.
+
+## Skill usage
+
+- Before starting a task, check the installed Codex skills and use every skill whose trigger and workflow match the request.
+- Use `frontend-design` when creating a new interface or materially reshaping the site's visual design.
+- Use `web-design-guidelines` when reviewing UI quality, accessibility, UX, or web best-practice compliance; fetch its current guideline source as required by that skill.
+- Use `agent-browser` for real browser interaction, screenshots, website testing, exploratory QA, scraping, or browser automation; load the current CLI workflow before running browser commands.
+- These named skills are important defaults, but they do not replace other installed skills that better match a future task.
+- Follow each selected skill's `SKILL.md` instructions and continue to respect the mandatory workspace boundary above.
+
 ## Project overview
 
-DuckLing's personal blog — a static site with custom Python tooling. Markdown articles in `markdown/` are converted to standalone HTML pages in `post/` by `md2html/md2html.py`. The homepage (`index.html`) is a Vue 3 SPA that reads article metadata from `articles.js`. Deployment is manual: a git push that lands on an nginx server at `blog.duckee.top` (CNAME file).
+DuckLing's personal blog — a Jekyll static site deployed through GitHub Pages. Markdown in `_posts/` is the only published-content source. GitHub Pages rebuilds the shared layouts, homepage archive, and article pages after each push to `main`; there is no runtime server and no hand-maintained article registry.
 
 ## Repo structure (what matters)
 
 ```
 blogweb/
-├── blog_core.py          # Core library — 5-step blog workflow
-├── blog-gui.py           # Main GUI (tkinter) wrapping blog_core
-├── blog_tool.py          # Standalone "每日算法" .md generator (tkinter)
-├── BlogTool.exe          # Frozen build of blog_tool.py
-├── blog-gui.exe          # Frozen build of blog-gui.py
-├── index.html            # Homepage — Vue 3 SPA, reads articles.js
-├── style.css             # Homepage styles only
-├── article.css           # Generated article styles (from config.yaml)
-├── articles.js           # Article registry — drives the homepage
+├── _config.yml           # Jekyll and site settings
+├── _layouts/             # Shared page skeletons; post.html serves every article
+├── _includes/            # Shared header/navigation
+├── _posts/               # Published Markdown source
+├── _drafts/              # Unpublished Markdown source
+├── assets/css/           # Shared site and article styling
+├── assets/js/            # Small homepage search enhancement
+├── assets/posts/         # Per-article local images
+├── scripts/blog.py       # Unified list/add/new/edit/delete/check CLI
+├── index.html            # Liquid homepage, generated from site.posts
 ├── view-counter.js       # Client-side view counter (calls Cloudflare Worker)
-├── markdown/             # Source Markdown files (*.md)
-├── post/                 # Generated HTML + per-article image folders
-├── md2html/              # Markdown → HTML converter (sub-project)
-│   ├── md2html.py        #   Core converter (CLI)
-│   ├── gui.py            #   Standalone GUI for md2html
-│   ├── config.yaml       #   Theme/styles config
-│   └── requirements.txt  #   Python deps
 ├── view-counter/         # Cloudflare Worker (KV-backed page view counter)
 │   └── src/index.js
 ├── img/                  # Static images (avatar, favicon)
 └── cpp/                  # C++ solution source files (unrelated to site)
 ```
 
-## The 5-step blog workflow (`blog_core.py`)
-
-1. **Generate** (`step1_generate`) — Converts `.md` → `post/{name}.html` using the md2html module. Also regenerates `article.css` from `config.yaml`.
-2. **Update config** (`step2_update_config`) — Appends an article entry to `articles.js` (or creates the file if missing).
-3. **Preview** (`step3_create_server`) — Starts a local HTTP server bound to `127.0.0.1:8080` serving the project root.
-4. **Publish** (`step4_publish`) — Runs `git add -A` + `git commit` + `git push` (with upstream auto-detection).
-5. **Delete** (`step5_delete_article`) — Removes the HTML file, image folder, and `articles.js` entry.
-
 ## Key conventions
 
-- **Commit messages**: `yy-mm-dd_x` format where `x` is the daily article count (e.g., `26-05-15_8`). Generated by `build_commit_message()` in `blog_core.py`.
-- **Article IDs**: Derived from the markdown filename stem (e.g., `26.5.5.md` → `id: '26.5.5'`).
-- **Article datetime**: Stored as `YYYY-MM-DD HH:MM` in `articles.js`. When omitted, defaults to file modification time.
-- **Image handling**: Per-article images live in a folder named after the article id (e.g., `post/26.5.8-1/`). The md2html converter auto-copies and rewrites paths.
-- **Path resolution**: When running from a PyInstaller-frozen `.exe`, paths resolve from `sys.executable` parent. Otherwise from `__file__` parent.
+- Published files use `_posts/YYYY-MM-DD-slug.md` and YAML front matter.
+- `slug` and `permalink: /post/<slug>.html` keep article URLs stable.
+- The title, publication date, and path live with the Markdown, never in a central JSON/JS file.
+- Per-article images live in `assets/posts/<slug>/` and are referenced with root-relative URLs.
+- Do not commit generated `_site/` output; GitHub Pages produces it.
+- Keep the current `/post/*.html` URL form because the view counter uses it as its stable key.
 
 ## Running locally
 
 ```bash
-# Install md2html deps (only needed for step1 / article generation)
-pip install -r md2html/requirements.txt
+# Validate content metadata and image references
+pip install -r requirements.txt
+python scripts/blog.py check
 
-# Launch the main blog manager GUI
-python blog-gui.py
+# Import an existing note
+python scripts/blog.py add path/to/note.md
 
-# Launch the simple "每日算法" markdown generator
-python blog_tool.py
-
-# Convert a single markdown file to HTML (standalone)
-python md2html/md2html.py markdown/my_post.md -c md2html/config.yaml
-
-# Build the GUI exe
-pyinstaller --onefile --windowed --name "blog-gui" blog-gui.py
+# Local Jekyll preview (requires Ruby/Bundler)
+bundle install
+bundle exec jekyll serve --livereload
 ```
